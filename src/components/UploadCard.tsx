@@ -51,7 +51,7 @@ export default function UploadCard({
       onClick={() => !file && inputRef.current?.click()}
       className={clsx(
         "flex w-full flex-1 flex-col items-center justify-center text-center transition-all",
-        "h-46 px-6 py-6 sm:h-49",
+        "h-32 px-6 py-4 sm:h-34",
         file
           ? "cursor-default"
           : isDragging

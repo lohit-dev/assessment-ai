@@ -15,8 +15,8 @@ function HomeIcon({
 }) {
   return (
     <svg
-      width="18"
-      height="18"
+      width="16"
+      height="16"
       viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +250,7 @@ export default function Sidebar() {
       }}
     >
       <div>
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <Image
               src="/assets/veda-ai.svg"
@@ -280,7 +280,7 @@ export default function Sidebar() {
         </div>
 
         <button
-          className="mb-6 flex w-full items-center justify-center gap-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-90"
+          className="mb-4 flex w-full items-center justify-center gap-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-90"
           style={{
             fontFamily: "var(--font-bricolage)",
             height: 42,

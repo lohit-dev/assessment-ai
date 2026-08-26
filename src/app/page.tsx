@@ -38,7 +38,7 @@ export default function UploadPage() {
       <div className="flex flex-1 flex-col gap-3 md:ml-82">
         <TopBar />
 
-        <main className="flex flex-1 flex-col items-center justify-center px-4 py-6 md:py-8">
+        <main className="flex flex-1 flex-col items-center justify-center px-4 pt-4 pb-8">
           <h1
             className="text-center text-2xl leading-tight md:hidden"
             style={{
@@ -57,7 +57,7 @@ export default function UploadPage() {
           </h1>
 
           <h1
-            className="text-3.5xl hidden text-center leading-tight md:block"
+            className="hidden text-center leading-tight md:block"
             style={{
               fontFamily: "var(--font-bricolage)",
               fontWeight: 700,
@@ -67,7 +67,7 @@ export default function UploadPage() {
           >
             Upload{" "}
             <span
-              className="inline-block rounded-xl px-3.5 py-1"
+              className="inline-block rounded-xl px-3 py-0.5"
               style={{
                 color: "#FF6A2B",
                 backgroundColor: "#FFE5D6",
@@ -81,7 +81,7 @@ export default function UploadPage() {
           </h1>
 
           <p
-            className="mt-2 text-center text-base"
+            className="mt-1.5 text-center text-base"
             style={{
               fontFamily: "var(--font-bricolage)",
               fontWeight: 400,
@@ -91,19 +91,19 @@ export default function UploadPage() {
             Upload both files to get started
           </p>
 
-          <div className="my-6 flex items-center justify-center md:my-8">
+          <div className="my-3 flex items-center justify-center">
             <Image
               src="/assets/tutor_image.svg"
               alt="AI tutor illustration"
-              width={140}
-              height={140}
+              width={88}
+              height={88}
               priority
-              className="size-35 select-none"
+              className="select-none"
             />
           </div>
 
           <div
-            className="flex w-full max-w-180 flex-col gap-3 p-3 sm:flex-row sm:gap-4 sm:p-4"
+            className="flex w-full max-w-2xl flex-col gap-2.5 p-2.5 sm:flex-row"
             style={{
               backgroundColor: "#FFFFFF80",
               borderRadius: 24,
@@ -127,7 +127,7 @@ export default function UploadPage() {
           <button
             disabled={!bothUploaded}
             onClick={handleStartMapping}
-            className="mt-7 flex h-11 items-center justify-center gap-2 rounded-full py-3 pr-5 pl-6 text-sm font-semibold text-white transition-all"
+            className="mt-4 flex h-11 items-center justify-center gap-2 rounded-full py-3 pr-5 pl-6 text-sm font-semibold text-white transition-all"
             style={{
               fontFamily: "var(--font-bricolage)",
               backgroundColor: "#303030",
@@ -145,7 +145,7 @@ export default function UploadPage() {
           </button>
 
           <p
-            className="mt-3.5 max-w-85 text-center text-xs md:max-w-none"
+            className="mt-2.5 max-w-85 text-center text-xs md:max-w-none"
             style={{
               fontFamily: "var(--font-inter)",
               color: "#8E8E8E",
