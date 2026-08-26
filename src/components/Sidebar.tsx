@@ -41,7 +41,7 @@ export default function Sidebar() {
       }}
     >
       <div>
-        <div className="mb-5 flex items-center justify-between">
+        <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             {/* VedaAI brand SVG */}
             <Image
@@ -56,7 +56,7 @@ export default function Sidebar() {
                 fontFamily: "var(--font-bricolage)",
                 fontWeight: 700,
                 color: "#303030",
-                fontSize: 18,
+                fontSize: 20,
               }}
             >
               VedaAI
@@ -72,10 +72,8 @@ export default function Sidebar() {
         </div>
 
         {/* ── AI Teacher's Toolkit CTA ── */}
-        {/* Figma: bg #272727, border 4px gradient #FF7950→#C0350A, h-42, px-43, gap-10 */}
-        {/* Shadows: 0 32 48 0 #FFFFFF33, 0 16 48 0 #FFFFFF1F */}
         <button
-          className="mb-6 flex w-full items-center justify-center gap-[10px] rounded-full text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
+          className="mb-6 flex w-full items-center justify-center gap-2.5 rounded-full text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
           style={{
             fontFamily: "var(--font-bricolage)",
             height: 42,
@@ -123,16 +121,14 @@ export default function Sidebar() {
         </button>
 
         {/* ── Nav links ── */}
-        <nav className="flex flex-col gap-0.5">
+        <nav className="flex flex-col gap-1">
           {navItems.map(({ label, icon: Icon, active }) => (
             <a
               key={label}
               href="#"
               className={clsx(
-                "flex items-center gap-3 rounded-lg px-3 py-[9px] text-[14px] transition-colors",
-                active
-                  ? "bg-gray-100 font-medium"
-                  : "font-normal hover:bg-gray-50"
+                "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[14px] transition-colors",
+                active ? "bg-[#F0F0F0]" : "hover:bg-gray-50"
               )}
               style={{
                 fontFamily: "var(--font-bricolage)",
@@ -143,7 +139,7 @@ export default function Sidebar() {
               <Icon
                 size={17}
                 strokeWidth={active ? 2 : 1.75}
-                style={{ color: SECONDARY }}
+                style={{ color: active ? "#303030" : SECONDARY }}
               />
               {label}
             </a>
@@ -155,7 +151,7 @@ export default function Sidebar() {
       <div>
         <a
           href="#"
-          className="mb-2 flex items-center gap-3 rounded-lg px-3 py-[9px] text-[14px] font-normal transition-colors hover:bg-gray-50"
+          className="mb-3 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[14px] font-normal transition-colors hover:bg-gray-50"
           style={{
             fontFamily: "var(--font-bricolage)",
             fontWeight: 400,
@@ -168,10 +164,10 @@ export default function Sidebar() {
 
         {/* School card */}
         <div
-          className="flex items-center gap-3 rounded-xl px-3 py-3"
+          className="flex items-center gap-3 rounded-2xl p-3"
           style={{ background: "#F0F0F0" }}
         >
-          <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full">
+          <div className="relative size-10 shrink-0 overflow-hidden rounded-full">
             <Image
               src="/assets/delhi_public_school.svg"
               alt="Delhi Public School logo"
@@ -185,9 +181,9 @@ export default function Sidebar() {
               style={{
                 fontFamily: "var(--font-bricolage)",
                 fontWeight: 700,
-                fontSize: 13,
+                fontSize: 13.5,
                 color: "#303030",
-                lineHeight: 1.3,
+                lineHeight: 1.25,
               }}
             >
               Delhi Public School
@@ -196,7 +192,7 @@ export default function Sidebar() {
               style={{
                 fontSize: 12,
                 color: "#5E5E5E",
-                lineHeight: 1.3,
+                lineHeight: 1.25,
                 marginTop: 2,
               }}
             >

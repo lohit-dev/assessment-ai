@@ -53,7 +53,7 @@ export default function TopBar() {
           <ArrowLeft size={19} strokeWidth={2} />
         </button>
         <span
-          className="text-[17px]"
+          className="text-[18px]"
           style={{
             fontFamily: "var(--font-bricolage)",
             fontWeight: 700,
@@ -77,9 +77,9 @@ export default function TopBar() {
 
         {/* Breadcrumb — disabled/secondary #A9A9A9 */}
         <div className="flex items-center gap-1.5" style={{ color: "#A9A9A9" }}>
-          <ClipboardList size={15} strokeWidth={1.75} />
+          <ClipboardList size={16} strokeWidth={1.75} />
           <span
-            className="text-sm"
+            className="text-[14px]"
             style={{
               fontFamily: "var(--font-inter)",
               fontWeight: 400,
@@ -155,7 +155,7 @@ export default function TopBar() {
             />
           </div>
           <span
-            className="text-sm"
+            className="text-[14px]"
             style={{
               fontFamily: "var(--font-bricolage)",
               fontWeight: 600,
@@ -164,7 +164,7 @@ export default function TopBar() {
           >
             Madhur Rastogi
           </span>
-          <ChevronDown size={14} style={{ color: "#A9A9A9" }} />
+          <ChevronDown size={14} style={{ color: "#303030" }} />
         </button>
       </div>
     </header>

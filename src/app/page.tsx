@@ -11,11 +11,11 @@ import { useAssessmentStore } from "@/store/useAssessmentStore";
 
 /** Mini icon badges orbiting on the avatar ring matching Figma */
 const AVATAR_BADGES = [
-  { top: "6px", left: "50%", transform: "translateX(-50%)" },
+  { top: "8px", left: "50%", transform: "translateX(-50%)" },
   { top: "42px", left: "6px" },
   { top: "42px", right: "6px" },
-  { bottom: "14px", left: "16px" },
-  { bottom: "14px", right: "16px" },
+  { bottom: "16px", left: "18px" },
+  { bottom: "16px", right: "18px" },
 ];
 
 export default function UploadPage() {
@@ -52,16 +52,20 @@ export default function UploadPage() {
 
         {/* Main: no card background, sits directly on gradient */}
         <main className="flex flex-1 flex-col items-center justify-center px-4 py-6 md:py-8">
-          {/* Mobile heading: bold, two lines */}
+          {/* Mobile heading */}
           <h1
-            className="text-center text-[22px] leading-tight md:hidden"
+            className="text-center text-[24px] leading-tight md:hidden"
             style={{
               fontFamily: "var(--font-bricolage)",
               fontWeight: 700,
               color: "#303030",
             }}
           >
-            Upload <u>Q</u>uestion Paper
+            Upload{" "}
+            <span className="underline decoration-[#FF6A2B] decoration-2 underline-offset-3">
+              Q
+            </span>
+            uestion Paper
             <br />
             &amp; Answer Sheets
           </h1>
@@ -77,19 +81,22 @@ export default function UploadPage() {
           >
             Upload{" "}
             <span
-              className="inline-block rounded-[10px] px-3 py-0.5"
+              className="inline-block rounded-[12px] px-3.5 py-1"
               style={{
                 color: "#FF6A2B",
                 backgroundColor: "#FFE5D6",
               }}
             >
-              Question Paper &amp; Answer Sheets
+              <span className="underline decoration-[#FF6A2B] decoration-2 underline-offset-4">
+                Q
+              </span>
+              uestion Paper &amp; Answer Sheets
             </span>
           </h1>
 
-          {/* Desktop subheading: #303030, font weight 400, Bricolage */}
+          {/* Desktop subheading */}
           <p
-            className="mt-2 text-center text-[15px]"
+            className="mt-2 text-center text-[16px]"
             style={{
               fontFamily: "var(--font-bricolage)",
               fontWeight: 400,
@@ -102,7 +109,7 @@ export default function UploadPage() {
           {/* Avatar with peach glow rings and orbiting badges */}
           <div
             className="relative my-6 flex items-center justify-center md:my-8"
-            style={{ width: 140, height: 140 }}
+            style={{ width: 148, height: 148 }}
           >
             {/* Layer 1 — outermost soft glow */}
             <div
@@ -114,24 +121,24 @@ export default function UploadPage() {
               className="absolute rounded-full"
               style={{
                 inset: 10,
-                background: "rgba(255, 106, 43, 0.16)",
+                background: "rgba(255, 106, 43, 0.18)",
               }}
             />
             {/* Layer 3 — white ring */}
             <div
-              className="absolute rounded-full bg-white"
-              style={{ inset: 18 }}
+              className="absolute rounded-full bg-white shadow-xs"
+              style={{ inset: 20 }}
             />
             {/* Layer 4 — image circle */}
             <div
               className="absolute overflow-hidden rounded-full bg-[#fdf6f0]"
-              style={{ inset: 22 }}
+              style={{ inset: 24 }}
             >
               <Image
                 src="/assets/tutor_image.svg"
                 alt="AI tutor illustration"
                 fill
-                sizes="96px"
+                sizes="100px"
                 className="object-cover object-top"
                 priority
               />
@@ -155,7 +162,7 @@ export default function UploadPage() {
 
           {/* Upload cards outer container: bg #FFFFFF80 (white-50) */}
           <div
-            className="flex w-full max-w-[700px] flex-col gap-3 p-3 sm:flex-row sm:gap-4 sm:p-4"
+            className="flex w-full max-w-[720px] flex-col gap-3 p-3 sm:flex-row sm:gap-4 sm:p-4"
             style={{
               backgroundColor: "#FFFFFF80",
               borderRadius: 24,
@@ -164,27 +171,32 @@ export default function UploadPage() {
           >
             <UploadCard
               label="Question Paper"
+              isQuestionPaper={true}
               file={questionPaperFile}
               onFileSelect={setQuestionPaperFile}
             />
             <UploadCard
               label="Answer Sheet"
+              isQuestionPaper={false}
               file={answerSheetFile}
               onFileSelect={setAnswerSheetFile}
             />
           </div>
 
-          {/* CTA Button — pill shape */}
+          {/* CTA Button — Primary Button Dark */}
           <button
             disabled={!bothUploaded}
             onClick={handleStartMapping}
-            className="mt-6 flex items-center justify-center gap-2 rounded-full px-8 py-3 text-[14px] font-semibold text-white transition-all"
+            className="mt-7 flex h-[44px] items-center justify-center gap-2 rounded-full py-3 pr-5 pl-6 text-[14px] font-semibold text-white transition-all"
             style={{
               fontFamily: "var(--font-bricolage)",
-              backgroundColor: bothUploaded ? "#303030" : "#C5C5C5",
+              backgroundColor: "#303030",
+              border: "2px solid #FFFFFF26",
+              borderRadius: 64,
+              opacity: bothUploaded ? 1 : 0.25,
               cursor: bothUploaded ? "pointer" : "not-allowed",
               boxShadow: bothUploaded
-                ? "0 4px 16px rgba(48, 48, 48, 0.2)"
+                ? "0 4px 16px rgba(48, 48, 48, 0.25)"
                 : "none",
             }}
           >
@@ -194,14 +206,14 @@ export default function UploadPage() {
 
           {/* Caption */}
           <p
-            className="mt-3 max-w-[300px] text-center text-[13px] md:max-w-none"
+            className="mt-3.5 max-w-[340px] text-center text-[13px] md:max-w-none"
             style={{
               fontFamily: "var(--font-inter)",
               color: "#8E8E8E",
             }}
           >
-            Once both files are uploaded, you&apos;ll be able to map answers
-            with questions
+            Once both files are uploaded, you&apos;ll able to map answers with
+            questions
           </p>
         </main>
       </div>

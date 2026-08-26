@@ -7,6 +7,7 @@ import clsx from "clsx";
 
 interface UploadCardProps {
   label: string;
+  isQuestionPaper?: boolean;
   file: File | null;
   onFileSelect: (file: File | null) => void;
   maxSizeMb?: number;
@@ -15,6 +16,7 @@ interface UploadCardProps {
 
 export default function UploadCard({
   label,
+  isQuestionPaper = false,
   file,
   onFileSelect,
   maxSizeMb = 10,
@@ -50,7 +52,7 @@ export default function UploadCard({
       onClick={() => !file && inputRef.current?.click()}
       className={clsx(
         "flex w-full flex-1 flex-col items-center justify-center text-center transition-all",
-        "h-[180px] px-6 py-6 sm:h-[190px]",
+        "h-[184px] px-6 py-6 sm:h-[196px]",
         file
           ? "cursor-default"
           : isDragging
@@ -60,7 +62,7 @@ export default function UploadCard({
       style={{
         backgroundColor: isDragging ? "#FFF8F5" : "#FFFFFF",
         border: `1.5px dashed ${isDragging ? "#FF6A2B" : file ? "#FF6A2B80" : "#CECECE"}`,
-        borderRadius: 16,
+        borderRadius: 20,
       }}
     >
       <input
@@ -75,26 +77,39 @@ export default function UploadCard({
         <>
           {/* Upload icon box */}
           <div
-            className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl transition-transform group-hover:scale-105"
+            className="mb-3.5 flex size-11 items-center justify-center rounded-xl transition-transform hover:scale-105"
             style={{ background: "#F6F6F6" }}
           >
             <Upload size={18} strokeWidth={2} style={{ color: "#303030" }} />
           </div>
           <p
-            className="text-[15px] leading-snug"
+            className="text-[16px] leading-snug"
             style={{
               fontFamily: "var(--font-bricolage)",
               fontWeight: 600,
               color: "#303030",
             }}
           >
-            Upload <span style={{ color: "#FF6A2B" }}>{label}</span>
+            Upload{" "}
+            <span style={{ color: "#FF6A2B" }}>
+              {isQuestionPaper ? (
+                <>
+                  <span className="underline decoration-[#FF6A2B] decoration-2 underline-offset-3">
+                    Q
+                  </span>
+                  uestion Paper
+                </>
+              ) : (
+                label
+              )}
+            </span>
           </p>
           <p
             className="mt-1 text-[13px]"
             style={{
               fontFamily: "var(--font-inter)",
-              color: "#8E8E8E",
+              fontWeight: 400,
+              color: "#5E5E5E8C",
             }}
           >
             Max {maxSizeMb}MB
@@ -103,7 +118,7 @@ export default function UploadCard({
       ) : (
         <div className="flex w-full items-center justify-between rounded-xl border border-gray-100 bg-[#F9F9F9] px-3.5 py-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-500">
+            <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-red-50 text-red-500">
               <FileText size={17} strokeWidth={1.75} />
             </div>
             <div className="text-left">
@@ -111,6 +126,7 @@ export default function UploadCard({
                 className="max-w-[140px] truncate text-[13.5px] font-semibold"
                 style={{
                   fontFamily: "var(--font-bricolage)",
+                  fontWeight: 600,
                   color: "#303030",
                 }}
               >
@@ -128,7 +144,7 @@ export default function UploadCard({
               onFileSelect(null);
               if (inputRef.current) inputRef.current.value = "";
             }}
-            className="flex h-7 w-7 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600"
+            className="flex size-7 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600"
           >
             <X size={15} />
           </button>
