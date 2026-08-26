@@ -10,57 +10,165 @@ import {
   ChevronDown,
   Menu,
 } from "lucide-react";
+import Image from "next/image";
+
+/** Reusable icon button with #F6F6F6 circle background */
+function IconBtn({
+  children,
+  ariaLabel,
+  className = "",
+}: {
+  children: React.ReactNode;
+  ariaLabel: string;
+  className?: string;
+}) {
+  return (
+    <button
+      aria-label={ariaLabel}
+      className={`relative flex h-[34px] w-[34px] items-center justify-center rounded-full transition-colors hover:brightness-95 ${className}`}
+      style={{ background: "#F6F6F6" }}
+    >
+      {children}
+    </button>
+  );
+}
 
 export default function TopBar() {
   return (
-    <header className="flex h-16 items-center justify-between border-b border-black/5 bg-white px-4 md:px-6">
-      {/* Mobile: back + wordmark */}
+    <header
+      className="flex h-[56px] shrink-0 items-center justify-between gap-[10px] pl-6 pr-2 backdrop-blur-md"
+      style={{
+        background: "#FFFFFFBF",
+        borderRadius: 16,
+        boxShadow:
+          "0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.03)",
+      }}
+    >
+      {/* ── Mobile: back arrow + wordmark ── */}
       <div className="flex items-center gap-3 md:hidden">
-        <button aria-label="Back" className="text-gray-700">
-          <ArrowLeft size={20} />
-        </button>
-        <span className="font-heading text-lg font-semibold">VedaAI</span>
-      </div>
-
-      {/* Desktop: back + breadcrumb */}
-      <div className="hidden items-center gap-3 text-gray-500 md:flex">
-        <button aria-label="Back" className="rounded-md p-1 hover:bg-gray-100">
-          <ArrowLeft size={18} />
-        </button>
-        <ClipboardList size={16} />
-        <span className="text-[15px] font-medium">Exams</span>
-      </div>
-
-      {/* Mobile: bell, avatar, hamburger */}
-      <div className="flex items-center gap-3 md:hidden">
-        <button aria-label="Notifications" className="relative text-gray-600">
-          <Bell size={20} />
-          <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-accent" />
-        </button>
-        <div className="h-8 w-8 rounded-full bg-orange-100" />
-        <button aria-label="Menu" className="text-gray-700">
-          <Menu size={22} />
-        </button>
-      </div>
-
-      {/* Desktop: help, bell, sparkle, profile */}
-      <div className="hidden items-center gap-4 md:flex">
-        <button aria-label="Help" className="rounded-full p-1.5 text-gray-500 hover:bg-gray-100">
-          <HelpCircle size={20} />
-        </button>
         <button
-          aria-label="Notifications"
-          className="relative rounded-full p-1.5 text-gray-500 hover:bg-gray-100"
+          aria-label="Back"
+          className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
+          style={{ color: "#303030" }}
         >
-          <Bell size={20} />
-          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-accent" />
+          <ArrowLeft size={19} strokeWidth={2} />
         </button>
-        <Sparkles size={20} className="text-accent" />
-        <div className="flex items-center gap-2">
-          <div className="h-9 w-9 rounded-full bg-orange-100" />
-          <span className="text-[15px] font-semibold">Madhur Rastogi</span>
-          <ChevronDown size={16} className="text-gray-400" />
+        <span
+          className="text-[17px]"
+          style={{
+            fontFamily: "var(--font-bricolage)",
+            fontWeight: 700,
+            color: "#303030",
+          }}
+        >
+          VedaAI
+        </span>
+      </div>
+
+      {/* ── Desktop: back + breadcrumb ── */}
+      <div className="hidden items-center gap-2.5 md:flex">
+        {/* Back button — #303030 text-primary */}
+        <button
+          aria-label="Back"
+          className="flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
+          style={{ color: "#303030" }}
+        >
+          <ArrowLeft size={17} strokeWidth={2.25} />
+        </button>
+
+        {/* Breadcrumb — disabled/secondary #A9A9A9 */}
+        <div className="flex items-center gap-1.5" style={{ color: "#A9A9A9" }}>
+          <ClipboardList size={15} strokeWidth={1.75} />
+          <span
+            className="text-[14px]"
+            style={{
+              fontFamily: "var(--font-inter)",
+              fontWeight: 400,
+              color: "#A9A9A9",
+            }}
+          >
+            Exams
+          </span>
         </div>
+      </div>
+
+      {/* ── Mobile: bell + avatar + hamburger ── */}
+      <div className="flex items-center gap-3 md:hidden">
+        <button aria-label="Notifications" className="relative">
+          <Bell size={20} strokeWidth={1.75} style={{ color: "#303030" }} />
+          <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#ff6a2b] ring-2 ring-white" />
+        </button>
+        <div className="relative h-8 w-8 overflow-hidden rounded-full">
+          <Image
+            src="/assets/madhur-profile.svg"
+            alt="User avatar"
+            fill
+            sizes="32px"
+            className="object-cover"
+          />
+        </div>
+        <button aria-label="Menu" style={{ color: "#303030" }}>
+          <Menu size={22} strokeWidth={1.75} />
+        </button>
+      </div>
+
+      {/* ── Desktop: icon trio + divider + profile ── */}
+      <div className="hidden items-center gap-2 md:flex">
+        {/* Help icon — #F6F6F6 bg */}
+        <IconBtn ariaLabel="Help">
+          <HelpCircle
+            size={17}
+            strokeWidth={1.75}
+            style={{ color: "#303030" }}
+          />
+        </IconBtn>
+
+        {/* Bell icon — #F6F6F6 bg + orange dot */}
+        <IconBtn ariaLabel="Notifications">
+          <Bell size={17} strokeWidth={1.75} style={{ color: "#303030" }} />
+          <span
+            className="absolute rounded-full bg-[#ff6a2b]"
+            style={{
+              width: 7,
+              height: 7,
+              top: 7,
+              right: 7,
+              outline: "1.5px solid white",
+            }}
+          />
+        </IconBtn>
+
+        {/* Sparkle icon — #F6F6F6 bg */}
+        <IconBtn ariaLabel="AI features">
+          <Sparkles size={17} strokeWidth={1.75} style={{ color: "#303030" }} />
+        </IconBtn>
+
+        {/* Vertical divider */}
+        <div className="mx-1 h-5 w-px bg-gray-200" />
+
+        {/* Profile — real avatar + Bricolage SemiBold 600 */}
+        <button className="flex items-center gap-2 rounded-full px-1.5 py-1 transition-colors hover:bg-gray-50">
+          <div className="relative h-[30px] w-[30px] overflow-hidden rounded-full">
+            <Image
+              src="/assets/madhur-profile.svg"
+              alt="Madhur Rastogi"
+              fill
+              sizes="30px"
+              className="object-cover"
+            />
+          </div>
+          <span
+            style={{
+              fontFamily: "var(--font-bricolage)",
+              fontWeight: 600,
+              fontSize: 14,
+              color: "#303030",
+            }}
+          >
+            Madhur Rastogi
+          </span>
+          <ChevronDown size={14} style={{ color: "#A9A9A9" }} />
+        </button>
       </div>
     </header>
   );

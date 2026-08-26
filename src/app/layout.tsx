@@ -18,7 +18,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "VedaAI — Exam Mapper",
-  description: "Upload a question paper and answer sheet to map and grade answers.",
+  description:
+    "Upload a question paper and answer sheet to map and grade answers.",
 };
 
 export default function RootLayout({
