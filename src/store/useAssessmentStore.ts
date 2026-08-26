@@ -1,4 +1,3 @@
-// src/store/useAssessmentStore.ts
 import { create } from "zustand";
 import type {
   UploadStage,
@@ -30,7 +29,6 @@ interface AssessmentState {
   selectedQuestionId: string | null;
   currentAnswerPage: number;
 
-  // actions
   setStage: (stage: UploadStage) => void;
   setError: (error: string | null) => void;
   setQuestionPaperFile: (file: File | null) => void;

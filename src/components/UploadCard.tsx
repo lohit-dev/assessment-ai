@@ -1,4 +1,3 @@
-// src/components/UploadCard.tsx
 "use client";
 
 import { useRef, useState } from "react";
@@ -52,7 +51,7 @@ export default function UploadCard({
       onClick={() => !file && inputRef.current?.click()}
       className={clsx(
         "flex w-full flex-1 flex-col items-center justify-center text-center transition-all",
-        "h-[184px] px-6 py-6 sm:h-[196px]",
+        "h-46 px-6 py-6 sm:h-49",
         file
           ? "cursor-default"
           : isDragging
@@ -75,7 +74,6 @@ export default function UploadCard({
 
       {!file ? (
         <>
-          {/* Upload icon box */}
           <div
             className="mb-3.5 flex size-11 items-center justify-center rounded-xl transition-transform hover:scale-105"
             style={{ background: "#F6F6F6" }}
@@ -83,7 +81,7 @@ export default function UploadCard({
             <Upload size={18} strokeWidth={2} style={{ color: "#303030" }} />
           </div>
           <p
-            className="text-[16px] leading-snug"
+            className="text-base leading-snug"
             style={{
               fontFamily: "var(--font-bricolage)",
               fontWeight: 600,
@@ -105,7 +103,7 @@ export default function UploadCard({
             </span>
           </p>
           <p
-            className="mt-1 text-[13px]"
+            className="mt-1 text-xs"
             style={{
               fontFamily: "var(--font-inter)",
               fontWeight: 400,
@@ -123,16 +121,15 @@ export default function UploadCard({
             </div>
             <div className="text-left">
               <p
-                className="max-w-[140px] truncate text-[13.5px] font-semibold"
+                className="max-w-35 truncate text-sm font-semibold"
                 style={{
                   fontFamily: "var(--font-bricolage)",
-                  fontWeight: 600,
                   color: "#303030",
                 }}
               >
                 {file.name}
               </p>
-              <p className="text-[12px] text-gray-400">
+              <p className="text-xs text-gray-400">
                 {(file.size / 1024 / 1024).toFixed(1)} MB
               </p>
             </div>
@@ -151,7 +148,7 @@ export default function UploadCard({
         </div>
       )}
 
-      {error && <p className="mt-2 text-[12px] text-red-500">{error}</p>}
+      {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
     </div>
   );
 }

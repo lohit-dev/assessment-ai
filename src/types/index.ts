@@ -1,5 +1,3 @@
-// src/types/index.ts
-
 export type UploadStage =
   | "idle"
   | "uploading"
@@ -42,7 +40,7 @@ export type MatchStatus = "matched" | "unanswered" | "unmatched-answer";
 export interface MappedQuestion {
   question: Question;
   status: MatchStatus;
-  regions: AnswerRegion[]; // empty if unanswered
+  regions: AnswerRegion[];
 }
 
 export interface GradeResult {
@@ -61,7 +59,7 @@ export interface ExamSummary {
 
 export interface PageImage {
   page: number;
-  url: string; // object URL or data URL from pdf.js render
+  url: string;
   width: number;
   height: number;
 }
