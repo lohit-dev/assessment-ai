@@ -25,7 +25,7 @@ function IconBtn({
   return (
     <button
       aria-label={ariaLabel}
-      className={`relative flex h-[34px] w-[34px] items-center justify-center rounded-full transition-colors hover:brightness-95 ${className}`}
+      className={`relative flex size-[34px] items-center justify-center rounded-full transition-colors hover:brightness-95 ${className}`}
       style={{ background: "#F6F6F6" }}
     >
       {children}
@@ -36,10 +36,9 @@ function IconBtn({
 export default function TopBar() {
   return (
     <header
-      className="flex h-[56px] shrink-0 items-center justify-between gap-[10px] pl-6 pr-2 backdrop-blur-md"
+      className="flex h-14 shrink-0 items-center justify-between gap-2.5 rounded-2xl pr-2 pl-6 backdrop-blur-md"
       style={{
         background: "#FFFFFFBF",
-        borderRadius: 16,
         boxShadow:
           "0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.03)",
       }}
@@ -48,7 +47,7 @@ export default function TopBar() {
       <div className="flex items-center gap-3 md:hidden">
         <button
           aria-label="Back"
-          className="flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
+          className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
           style={{ color: "#303030" }}
         >
           <ArrowLeft size={19} strokeWidth={2} />
@@ -70,7 +69,7 @@ export default function TopBar() {
         {/* Back button — #303030 text-primary */}
         <button
           aria-label="Back"
-          className="flex h-7 w-7 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
+          className="flex size-7 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
           style={{ color: "#303030" }}
         >
           <ArrowLeft size={17} strokeWidth={2.25} />
@@ -80,7 +79,7 @@ export default function TopBar() {
         <div className="flex items-center gap-1.5" style={{ color: "#A9A9A9" }}>
           <ClipboardList size={15} strokeWidth={1.75} />
           <span
-            className="text-[14px]"
+            className="text-sm"
             style={{
               fontFamily: "var(--font-inter)",
               fontWeight: 400,
@@ -96,9 +95,9 @@ export default function TopBar() {
       <div className="flex items-center gap-3 md:hidden">
         <button aria-label="Notifications" className="relative">
           <Bell size={20} strokeWidth={1.75} style={{ color: "#303030" }} />
-          <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#ff6a2b] ring-2 ring-white" />
+          <span className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-[#ff6a2b] ring-2 ring-white" />
         </button>
-        <div className="relative h-8 w-8 overflow-hidden rounded-full">
+        <div className="relative size-8 overflow-hidden rounded-full">
           <Image
             src="/assets/madhur-profile.svg"
             alt="User avatar"
@@ -127,10 +126,8 @@ export default function TopBar() {
         <IconBtn ariaLabel="Notifications">
           <Bell size={17} strokeWidth={1.75} style={{ color: "#303030" }} />
           <span
-            className="absolute rounded-full bg-[#ff6a2b]"
+            className="absolute size-[7px] rounded-full bg-[#ff6a2b]"
             style={{
-              width: 7,
-              height: 7,
               top: 7,
               right: 7,
               outline: "1.5px solid white",
@@ -148,7 +145,7 @@ export default function TopBar() {
 
         {/* Profile — real avatar + Bricolage SemiBold 600 */}
         <button className="flex items-center gap-2 rounded-full px-1.5 py-1 transition-colors hover:bg-gray-50">
-          <div className="relative h-[30px] w-[30px] overflow-hidden rounded-full">
+          <div className="relative size-[30px] overflow-hidden rounded-full">
             <Image
               src="/assets/madhur-profile.svg"
               alt="Madhur Rastogi"
@@ -158,10 +155,10 @@ export default function TopBar() {
             />
           </div>
           <span
+            className="text-sm"
             style={{
               fontFamily: "var(--font-bricolage)",
               fontWeight: 600,
-              fontSize: 14,
               color: "#303030",
             }}
           >

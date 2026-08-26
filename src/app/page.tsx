@@ -77,7 +77,7 @@ export default function UploadPage() {
           >
             Upload{" "}
             <span
-              className="rounded-[10px] px-3 py-0.5 inline-block"
+              className="inline-block rounded-[10px] px-3 py-0.5"
               style={{
                 color: "#FF6A2B",
                 backgroundColor: "#FFE5D6",
@@ -155,7 +155,7 @@ export default function UploadPage() {
 
           {/* Upload cards outer container: bg #FFFFFF80 (white-50) */}
           <div
-            className="flex w-full max-w-[700px] flex-col gap-3 sm:flex-row sm:gap-4 p-3 sm:p-4"
+            className="flex w-full max-w-[700px] flex-col gap-3 p-3 sm:flex-row sm:gap-4 sm:p-4"
             style={{
               backgroundColor: "#FFFFFF80",
               borderRadius: 24,

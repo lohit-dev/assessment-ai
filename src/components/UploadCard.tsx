@@ -50,11 +50,11 @@ export default function UploadCard({
       onClick={() => !file && inputRef.current?.click()}
       className={clsx(
         "flex w-full flex-1 flex-col items-center justify-center text-center transition-all",
-        "h-[180px] sm:h-[190px] px-6 py-6",
+        "h-[180px] px-6 py-6 sm:h-[190px]",
         file
           ? "cursor-default"
           : isDragging
-            ? "bg-[#FFF8F5] cursor-copy"
+            ? "cursor-copy bg-[#FFF8F5]"
             : "cursor-pointer hover:border-gray-400"
       )}
       style={{
@@ -128,7 +128,7 @@ export default function UploadCard({
               onFileSelect(null);
               if (inputRef.current) inputRef.current.value = "";
             }}
-            className="flex h-7 w-7 items-center justify-center rounded-full text-gray-400 hover:bg-gray-200 hover:text-gray-600 transition-colors"
+            className="flex h-7 w-7 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-600"
           >
             <X size={15} />
           </button>
