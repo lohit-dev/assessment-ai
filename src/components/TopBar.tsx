@@ -22,8 +22,7 @@ function IconBtn({
   return (
     <button
       aria-label={ariaLabel}
-      className={`relative flex size-8.5 items-center justify-center rounded-full transition-colors hover:brightness-95 ${className}`}
-      style={{ background: "#F6F6F6" }}
+      className={`bg-surface-soft relative flex size-8.5 items-center justify-center rounded-full transition-colors hover:brightness-95 ${className}`}
     >
       {children}
     </button>
@@ -32,44 +31,26 @@ function IconBtn({
 
 export default function TopBar() {
   return (
-    <header
-      className="flex h-14 shrink-0 items-center justify-between gap-2.5 rounded-2xl pr-2 pl-6 backdrop-blur-md"
-      style={{
-        background: "#FFFFFFBF",
-        boxShadow:
-          "0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.03)",
-      }}
-    >
+    <header className="flex h-14 shrink-0 items-center justify-between gap-2.5 rounded-2xl bg-white/75 pr-2 pl-6 shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.05),0_0_0_1px_rgba(0,0,0,0.03)] backdrop-blur-md">
       <div className="flex items-center gap-3 md:hidden">
         <button
           aria-label="Back"
-          className="flex size-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
-          style={{ color: "#303030" }}
+          className="text-body flex size-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
         >
           <ArrowLeft size={19} strokeWidth={2} />
         </button>
-        <span
-          className="text-lg font-bold"
-          style={{
-            fontFamily: "var(--font-bricolage)",
-            fontWeight: 700,
-            color: "#303030",
-          }}
-        >
-          VedaAI
-        </span>
+        <span className="font-heading text-body text-lg font-bold">VedaAI</span>
       </div>
 
       <div className="hidden items-center gap-2.5 md:flex">
         <button
           aria-label="Back"
-          className="flex size-7 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
-          style={{ color: "#303030" }}
+          className="text-body flex size-7 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
         >
           <ArrowLeft size={17} strokeWidth={2.25} />
         </button>
 
-        <div className="flex items-center gap-1.5" style={{ color: "#A9A9A9" }}>
+        <div className="text-disabled flex items-center gap-1.5">
           <svg
             width="16"
             height="16"
@@ -93,22 +74,16 @@ export default function TopBar() {
               strokeLinecap="round"
             />
           </svg>
-          <span
-            className="text-sm font-normal"
-            style={{
-              fontFamily: "var(--font-inter)",
-              color: "#A9A9A9",
-            }}
-          >
+          <span className="font-heading text-disabled text-base font-semibold tracking-[-0.64px]">
             Exams
           </span>
         </div>
       </div>
 
       <div className="flex items-center gap-3 md:hidden">
-        <button aria-label="Notifications" className="relative">
-          <Bell size={20} strokeWidth={1.75} style={{ color: "#303030" }} />
-          <span className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-[#ff6a2b] ring-2 ring-white" />
+        <button aria-label="Notifications" className="text-body relative">
+          <Bell size={20} strokeWidth={1.75} />
+          <span className="bg-accent absolute -top-0.5 -right-0.5 size-2 rounded-full ring-2 ring-white" />
         </button>
         <div className="relative size-8 overflow-hidden rounded-full">
           <Image
@@ -119,34 +94,23 @@ export default function TopBar() {
             className="object-cover"
           />
         </div>
-        <button aria-label="Menu" style={{ color: "#303030" }}>
+        <button aria-label="Menu" className="text-body">
           <Menu size={22} strokeWidth={1.75} />
         </button>
       </div>
 
       <div className="hidden items-center gap-2 md:flex">
         <IconBtn ariaLabel="Help">
-          <HelpCircle
-            size={17}
-            strokeWidth={1.75}
-            style={{ color: "#303030" }}
-          />
+          <HelpCircle size={17} strokeWidth={1.75} className="text-body" />
         </IconBtn>
 
         <IconBtn ariaLabel="Notifications">
-          <Bell size={17} strokeWidth={1.75} style={{ color: "#303030" }} />
-          <span
-            className="absolute size-1.75 rounded-full bg-[#ff6a2b]"
-            style={{
-              top: 7,
-              right: 7,
-              outline: "1.5px solid white",
-            }}
-          />
+          <Bell size={17} strokeWidth={1.75} className="text-body" />
+          <span className="bg-accent absolute top-[7px] right-[7px] size-1.75 rounded-full outline-[1.5px] outline-white" />
         </IconBtn>
 
         <IconBtn ariaLabel="AI features">
-          <Sparkles size={17} strokeWidth={1.75} style={{ color: "#303030" }} />
+          <Sparkles size={17} strokeWidth={1.75} className="text-body" />
         </IconBtn>
 
         <div className="mx-1 h-5 w-px bg-gray-200" />
@@ -161,16 +125,10 @@ export default function TopBar() {
               className="object-cover"
             />
           </div>
-          <span
-            className="text-sm font-semibold"
-            style={{
-              fontFamily: "var(--font-bricolage)",
-              color: "#303030",
-            }}
-          >
+          <span className="font-heading text-body text-base font-semibold tracking-[-0.64px]">
             Madhur Rastogi
           </span>
-          <ChevronDown size={14} style={{ color: "#303030" }} />
+          <ChevronDown size={14} className="text-body" />
         </button>
       </div>
     </header>

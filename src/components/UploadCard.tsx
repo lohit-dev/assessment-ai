@@ -6,7 +6,6 @@ import clsx from "clsx";
 
 interface UploadCardProps {
   label: string;
-  isQuestionPaper?: boolean;
   file: File | null;
   onFileSelect: (file: File | null) => void;
   maxSizeMb?: number;
@@ -15,7 +14,6 @@ interface UploadCardProps {
 
 export default function UploadCard({
   label,
-  isQuestionPaper = false,
   file,
   onFileSelect,
   maxSizeMb = 10,
@@ -50,19 +48,13 @@ export default function UploadCard({
       }}
       onClick={() => !file && inputRef.current?.click()}
       className={clsx(
-        "flex w-full flex-1 flex-col items-center justify-center text-center transition-all",
-        "h-32 px-6 py-4 sm:h-34",
-        file
-          ? "cursor-default"
-          : isDragging
-            ? "cursor-copy bg-[#FFF8F5]"
-            : "cursor-pointer hover:border-gray-400"
+        "flex h-32 w-full flex-1 flex-col items-center justify-center rounded-[20px] border-[1.5px] border-dashed px-6 py-4 text-center transition-all sm:h-34",
+        isDragging
+          ? "border-accent bg-accent-50 cursor-copy"
+          : file
+            ? "border-accent/50 cursor-default bg-white"
+            : "border-hairline cursor-pointer bg-white hover:border-gray-400"
       )}
-      style={{
-        backgroundColor: isDragging ? "#FFF8F5" : "#FFFFFF",
-        border: `1.5px dashed ${isDragging ? "#FF6A2B" : file ? "#FF6A2B80" : "#CECECE"}`,
-        borderRadius: 20,
-      }}
     >
       <input
         ref={inputRef}
@@ -74,42 +66,13 @@ export default function UploadCard({
 
       {!file ? (
         <>
-          <div
-            className="mb-3.5 flex size-11 items-center justify-center rounded-xl transition-transform hover:scale-105"
-            style={{ background: "#F6F6F6" }}
-          >
-            <Upload size={18} strokeWidth={2} style={{ color: "#303030" }} />
+          <div className="bg-surface-muted mb-4 flex size-12 items-center justify-center rounded-lg transition-transform hover:scale-105">
+            <Upload size={20} strokeWidth={2} className="text-body" />
           </div>
-          <p
-            className="text-base leading-snug"
-            style={{
-              fontFamily: "var(--font-bricolage)",
-              fontWeight: 600,
-              color: "#303030",
-            }}
-          >
-            Upload{" "}
-            <span style={{ color: "#FF6A2B" }}>
-              {isQuestionPaper ? (
-                <>
-                  <span className="underline decoration-[#FF6A2B] decoration-2 underline-offset-3">
-                    Q
-                  </span>
-                  uestion Paper
-                </>
-              ) : (
-                label
-              )}
-            </span>
+          <p className="font-heading text-body text-xl leading-snug font-semibold tracking-[-1.2px]">
+            Upload <span className="text-accent">{label}</span>
           </p>
-          <p
-            className="mt-1 text-xs"
-            style={{
-              fontFamily: "var(--font-inter)",
-              fontWeight: 400,
-              color: "#5E5E5E8C",
-            }}
-          >
+          <p className="mt-0.5 font-sans text-sm font-normal text-[#5E5E5E8C]">
             Max {maxSizeMb}MB
           </p>
         </>
@@ -120,13 +83,7 @@ export default function UploadCard({
               <FileText size={17} strokeWidth={1.75} />
             </div>
             <div className="text-left">
-              <p
-                className="max-w-35 truncate text-sm font-semibold"
-                style={{
-                  fontFamily: "var(--font-bricolage)",
-                  color: "#303030",
-                }}
-              >
+              <p className="font-heading text-body max-w-35 truncate text-sm font-semibold">
                 {file.name}
               </p>
               <p className="text-xs text-gray-400">

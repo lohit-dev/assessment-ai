@@ -4,8 +4,6 @@ import { Settings, PanelLeft } from "lucide-react";
 import Image from "next/image";
 import clsx from "clsx";
 
-const SECONDARY = "#5E5E5ECC";
-
 function HomeIcon({
   className,
   style,
@@ -234,21 +232,7 @@ const navItems = [
 
 export default function Sidebar() {
   return (
-    <aside
-      className="hidden flex-col justify-between bg-white md:flex"
-      style={{
-        position: "fixed",
-        top: 12,
-        left: 12,
-        width: 304,
-        height: "calc(100vh - 24px)",
-        borderRadius: 16,
-        padding: 24,
-        boxShadow:
-          "0 32px 48px 0 rgba(0,0,0,0.20), 0 16px 48px 0 rgba(0,0,0,0.12)",
-        zIndex: 40,
-      }}
-    >
+    <aside className="fixed top-3 left-3 z-40 hidden h-[calc(100vh-24px)] w-76 flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_32px_48px_0_rgba(0,0,0,0.20),0_16px_48px_0_rgba(0,0,0,0.12)] md:flex">
       <div>
         <div className="mb-5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -259,57 +243,19 @@ export default function Sidebar() {
               height={36}
               priority
             />
-            <span
-              style={{
-                fontFamily: "var(--font-bricolage)",
-                fontWeight: 700,
-                color: "#303030",
-                fontSize: 20,
-              }}
-            >
+            <span className="font-heading text-body text-[28px] font-bold tracking-[-1.68px]">
               VedaAI
             </span>
           </div>
           <button
             aria-label="Toggle sidebar"
-            className="rounded-md p-1.5 transition-colors hover:bg-gray-100"
-            style={{ color: SECONDARY }}
+            className="text-muted-2/80 rounded-md p-1.5 transition-colors hover:bg-gray-100"
           >
             <PanelLeft size={17} />
           </button>
         </div>
 
-        <button
-          className="mb-4 flex w-full items-center justify-center gap-2.5 rounded-full text-sm font-semibold text-white transition-opacity hover:opacity-90"
-          style={{
-            fontFamily: "var(--font-bricolage)",
-            height: 42,
-            paddingLeft: 43,
-            paddingRight: 43,
-            background: "#272727",
-            border: "4px solid transparent",
-            backgroundClip: "padding-box",
-            outline: "4px solid transparent",
-            position: "relative",
-            boxShadow:
-              "0 32px 48px 0 rgba(255,255,255,0.20), 0 16px 48px 0 rgba(255,255,255,0.12)",
-          }}
-        >
-          <span
-            aria-hidden
-            style={{
-              position: "absolute",
-              inset: -4,
-              borderRadius: "inherit",
-              padding: 4,
-              background: "linear-gradient(135deg, #FF7950 0%, #C0350A 100%)",
-              WebkitMask:
-                "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-              WebkitMaskComposite: "xor",
-              maskComposite: "exclude",
-              pointerEvents: "none",
-            }}
-          />
+        <button className="border-accent-glow relative mb-4 flex h-[42px] w-full items-center justify-center gap-2.5 rounded-full border-4 bg-[#272727] px-[43px] font-sans text-base font-medium tracking-[-0.64px] text-white shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90">
           <svg
             width="16"
             height="16"
@@ -331,20 +277,13 @@ export default function Sidebar() {
               key={label}
               href="#"
               className={clsx(
-                "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm transition-colors",
-                active ? "bg-[#F0F0F0]" : "hover:bg-gray-50"
+                "font-heading flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-base tracking-[-0.64px] transition-colors",
+                active
+                  ? "text-body bg-[#F0F0F0] font-medium"
+                  : "text-muted-2/80 font-normal hover:bg-gray-50"
               )}
-              style={{
-                fontFamily: "var(--font-bricolage)",
-                fontWeight: active ? 500 : 400,
-                color: active ? "#303030" : SECONDARY,
-              }}
             >
-              <Icon
-                style={{
-                  color: active ? "#303030" : SECONDARY,
-                }}
-              />
+              <Icon className={active ? "text-body" : "text-muted-2/80"} />
               {label}
             </a>
           ))}
@@ -354,21 +293,13 @@ export default function Sidebar() {
       <div>
         <a
           href="#"
-          className="mb-3 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-normal transition-colors hover:bg-gray-50"
-          style={{
-            fontFamily: "var(--font-bricolage)",
-            fontWeight: 400,
-            color: SECONDARY,
-          }}
+          className="font-heading text-muted-2/80 mb-3 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-normal transition-colors hover:bg-gray-50"
         >
-          <Settings size={17} strokeWidth={1.75} style={{ color: SECONDARY }} />
+          <Settings size={17} strokeWidth={1.75} className="text-muted-2/80" />
           Settings
         </a>
 
-        <div
-          className="flex items-center gap-3 rounded-2xl p-3"
-          style={{ background: "#F0F0F0" }}
-        >
+        <div className="bg-surface-alt flex items-center gap-3 rounded-2xl p-3">
           <div className="relative size-10 shrink-0 overflow-hidden rounded-full">
             <Image
               src="/assets/delhi_public_school.svg"
@@ -379,25 +310,10 @@ export default function Sidebar() {
             />
           </div>
           <div>
-            <p
-              style={{
-                fontFamily: "var(--font-bricolage)",
-                fontWeight: 700,
-                fontSize: 13.5,
-                color: "#303030",
-                lineHeight: 1.25,
-              }}
-            >
+            <p className="font-heading text-body text-[16px] leading-[1.4] font-bold tracking-[-0.64px]">
               Delhi Public School
             </p>
-            <p
-              style={{
-                fontSize: 12,
-                color: "#5E5E5E",
-                lineHeight: 1.25,
-                marginTop: 2,
-              }}
-            >
+            <p className="font-heading text-muted-2 mt-0.5 text-[14px] leading-[1.4] tracking-[-0.56px]">
               Bokaro Steel City
             </p>
           </div>
