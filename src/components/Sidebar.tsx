@@ -1,6 +1,6 @@
 "use client";
 
-import { Settings, PanelLeft } from "lucide-react";
+import { Settings, PanelLeft, ChevronsRight } from "lucide-react";
 import Image from "next/image";
 import clsx from "clsx";
 
@@ -230,7 +230,83 @@ const navItems = [
   { label: "My Library", icon: LibraryIcon },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  variant?: "expanded" | "collapsed";
+}
+
+export default function Sidebar({ variant = "expanded" }: SidebarProps) {
+  if (variant === "collapsed") {
+    return (
+      <aside className="fixed top-[11px] left-[10px] z-40 hidden h-[calc(100vh-22px)] w-16 flex-col items-center justify-between rounded-2xl bg-white px-6 py-3 shadow-[0_32px_48px_0_rgba(0,0,0,0.20),0_16px_48px_0_rgba(0,0,0,0.12)] md:flex">
+        <div className="flex flex-col items-center gap-14">
+          <Image
+            src="/assets/veda-ai.svg"
+            alt="VedaAI logo"
+            width={40}
+            height={40}
+            priority
+          />
+
+          <button
+            aria-label="AI Teacher's Toolkit"
+            className="border-accent-glow relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              aria-hidden
+            >
+              <path
+                d="M8 1l1.545 4.455L14 7l-4.455 1.545L8 15l-1.545-4.455L2 9l4.455-1.545L8 1z"
+                fill="white"
+              />
+            </svg>
+          </button>
+
+          <nav className="flex flex-col items-center gap-2">
+            {navItems.map(({ label, icon: Icon, active }) => (
+              <a
+                key={label}
+                href="#"
+                aria-label={label}
+                className={clsx(
+                  "flex size-9 items-center justify-center rounded-lg transition-colors",
+                  active
+                    ? "bg-surface-alt text-body"
+                    : "text-muted-2/80 hover:bg-gray-50"
+                )}
+              >
+                <Icon />
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <div className="flex flex-col items-center gap-2">
+          <div className="bg-surface-alt flex items-center rounded-[11.5px] p-0.5">
+            <div className="relative size-10 shrink-0 overflow-hidden rounded-lg">
+              <Image
+                src="/assets/delhi_public_school.svg"
+                alt="Delhi Public School logo"
+                fill
+                sizes="40px"
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <button
+            aria-label="Expand sidebar"
+            className="text-muted-2/80 flex items-center justify-center px-3 py-2"
+          >
+            <ChevronsRight size={18} />
+          </button>
+        </div>
+      </aside>
+    );
+  }
+
   return (
     <aside className="fixed top-3 left-3 z-40 hidden h-[calc(100vh-24px)] w-76 flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_32px_48px_0_rgba(0,0,0,0.20),0_16px_48px_0_rgba(0,0,0,0.12)] md:flex">
       <div>
