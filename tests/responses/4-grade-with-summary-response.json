@@ -1,0 +1,14 @@
+{
+  "result": {
+    "questionId": "Q1",
+    "isCorrect": true,
+    "score": 2,
+    "maxScore": 2,
+    "feedback": "Correct. You provided both the standard approximation and the precise value."
+  },
+  "summary": {
+    "totalScore": 13,
+    "maxScore": 20,
+    "overallFeedback": "Good effort. You scored 13/20 (65%). Review the questions you missed."
+  }
+}

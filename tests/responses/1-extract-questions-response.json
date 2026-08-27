@@ -1,0 +1,47 @@
+{
+  "questions": [
+    {
+      "questionId": "1",
+      "displayNumber": "Q1.",
+      "text": "What is the speed of light in a vacuum?",
+      "marks": 2,
+      "page": 1
+    },
+    {
+      "questionId": "2",
+      "displayNumber": "Q2.",
+      "text": "Define the term 'refractive index' and write its formula.",
+      "marks": 4,
+      "page": 1
+    },
+    {
+      "questionId": "3a",
+      "displayNumber": "Q3 (a).",
+      "text": "A ray of light travels from water (n=1.33) into glass (n=1.5). If the angle of incidence is 30 degrees, find the angle of refraction using Snell's Law.",
+      "marks": 6,
+      "page": 1
+    },
+    {
+      "questionId": "3b",
+      "displayNumber": "Q3 (b).",
+      "text": "State one real-world application of total internal reflection.",
+      "marks": 2,
+      "page": 1
+    },
+    {
+      "questionId": "4",
+      "displayNumber": "Q4.",
+      "text": "Draw a ray diagram showing how a concave mirror forms a real, inverted image. Label the principal focus and centre of curvature.",
+      "marks": 6,
+      "page": 1
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "url": "<PDF base64 — 2524 chars>",
+      "width": 595,
+      "height": 842
+    }
+  ]
+}

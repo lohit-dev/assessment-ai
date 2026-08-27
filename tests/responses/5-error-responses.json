@@ -1,0 +1,44 @@
+{
+  "POST /api/extract-questions — missing file (400)": {
+    "status": 400,
+    "body": {
+      "error": "Missing required field \"file\"."
+    }
+  },
+  "POST /api/extract-questions — wrong mime type (415)": {
+    "status": 415,
+    "body": {
+      "error": "Unsupported file type: text/plain. Send a PDF or an image."
+    }
+  },
+  "POST /api/extract-answers — missing questions field (400)": {
+    "status": 400,
+    "body": {
+      "error": "Missing required field \"questions\" (JSON string)."
+    }
+  },
+  "POST /api/extract-answers — malformed questions JSON (400)": {
+    "status": 400,
+    "body": {
+      "error": "Invalid \"questions\" JSON: Expected property name or '}' in JSON at position 2 (line 1 column 3)"
+    }
+  },
+  "POST /api/grade — missing question field (400)": {
+    "status": 400,
+    "body": {
+      "error": "Missing or invalid \"question\"."
+    }
+  },
+  "POST /api/grade — unanswered question (200, no AI)": {
+    "status": 200,
+    "body": {
+      "result": {
+        "questionId": "99",
+        "isCorrect": false,
+        "score": 0,
+        "maxScore": 5,
+        "feedback": "No answer provided for this question."
+      }
+    }
+  }
+}

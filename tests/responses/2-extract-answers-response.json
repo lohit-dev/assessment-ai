@@ -1,0 +1,224 @@
+{
+  "regions": [
+    {
+      "regionId": "r1",
+      "questionLabel": "Ans 1:",
+      "normalizedId": "1",
+      "boundingBox": {
+        "x": 0.08,
+        "y": 0.22,
+        "width": 0.65,
+        "height": 0.08
+      },
+      "page": 1,
+      "confidence": 1,
+      "continuesOnNextPage": false,
+      "text": "The speed of light in a vacuum is 3 x 10^8 metres per second or approximately 299,792,458 m/s."
+    },
+    {
+      "regionId": "r2",
+      "questionLabel": "Ans 2:",
+      "normalizedId": "2",
+      "boundingBox": {
+        "x": 0.08,
+        "y": 0.35,
+        "width": 0.65,
+        "height": 0.08
+      },
+      "page": 1,
+      "confidence": 1,
+      "continuesOnNextPage": false,
+      "text": "Refractive index (n) is the ratio of the speed of light in vacuum to the speed of light in the medium. Formula: n = c / v where c is speed in vacuum and v in medium."
+    },
+    {
+      "regionId": "r3",
+      "questionLabel": "Ans 3 (a):",
+      "normalizedId": "3a",
+      "boundingBox": {
+        "x": 0.08,
+        "y": 0.48,
+        "width": 0.5,
+        "height": 0.18
+      },
+      "page": 1,
+      "confidence": 1,
+      "continuesOnNextPage": false,
+      "text": "Using Snells Law: n1 * sin(i) = n2 * sin(r) 1.33 * sin(30) = 1.5 * sin(r) 1.33 * 0.5 = 1.5 * sin(r) 0.665 = 1.5 * sin(r) sin(r) = 0.665 / 1.5 = 0.4433 r = arcsin(0.4433) = approximately 26.3 degrees"
+    },
+    {
+      "regionId": "r4",
+      "questionLabel": "Ans 3 (b):",
+      "normalizedId": "3b",
+      "boundingBox": {
+        "x": 0.08,
+        "y": 0.7,
+        "width": 0.6,
+        "height": 0.06
+      },
+      "page": 1,
+      "confidence": 1,
+      "continuesOnNextPage": false,
+      "text": "Optical fibres use total internal reflection to transmit data as light pulses over long distances with minimal loss."
+    },
+    {
+      "regionId": "r5",
+      "questionLabel": "Ans 4:",
+      "normalizedId": "4",
+      "boundingBox": {
+        "x": 0.08,
+        "y": 0.8,
+        "width": 0.6,
+        "height": 0.06
+      },
+      "page": 1,
+      "confidence": 1,
+      "continuesOnNextPage": false,
+      "text": "[Ray diagram drawn - concave mirror with object beyond C, image formed between F and C, real and inverted]"
+    }
+  ],
+  "mapped": [
+    {
+      "question": {
+        "questionId": "1",
+        "displayNumber": "Q1.",
+        "text": "What is the speed of light in a vacuum?",
+        "marks": 2,
+        "page": 1
+      },
+      "status": "matched",
+      "regions": [
+        {
+          "regionId": "r1",
+          "questionLabel": "Ans 1:",
+          "normalizedId": "1",
+          "boundingBox": {
+            "x": 0.08,
+            "y": 0.22,
+            "width": 0.65,
+            "height": 0.08
+          },
+          "page": 1,
+          "confidence": 1,
+          "continuesOnNextPage": false,
+          "text": "The speed of light in a vacuum is 3 x 10^8 metres per second or approximately 299,792,458 m/s."
+        }
+      ]
+    },
+    {
+      "question": {
+        "questionId": "2",
+        "displayNumber": "Q2.",
+        "text": "Define the term 'refractive index' and write its formula.",
+        "marks": 4,
+        "page": 1
+      },
+      "status": "matched",
+      "regions": [
+        {
+          "regionId": "r2",
+          "questionLabel": "Ans 2:",
+          "normalizedId": "2",
+          "boundingBox": {
+            "x": 0.08,
+            "y": 0.35,
+            "width": 0.65,
+            "height": 0.08
+          },
+          "page": 1,
+          "confidence": 1,
+          "continuesOnNextPage": false,
+          "text": "Refractive index (n) is the ratio of the speed of light in vacuum to the speed of light in the medium. Formula: n = c / v where c is speed in vacuum and v in medium."
+        }
+      ]
+    },
+    {
+      "question": {
+        "questionId": "3a",
+        "displayNumber": "Q3 (a).",
+        "text": "A ray of light travels from water (n=1.33) into glass (n=1.5). If the angle of incidence is 30 degrees, find the angle of refraction using Snell's Law.",
+        "marks": 6,
+        "page": 1
+      },
+      "status": "matched",
+      "regions": [
+        {
+          "regionId": "r3",
+          "questionLabel": "Ans 3 (a):",
+          "normalizedId": "3a",
+          "boundingBox": {
+            "x": 0.08,
+            "y": 0.48,
+            "width": 0.5,
+            "height": 0.18
+          },
+          "page": 1,
+          "confidence": 1,
+          "continuesOnNextPage": false,
+          "text": "Using Snells Law: n1 * sin(i) = n2 * sin(r) 1.33 * sin(30) = 1.5 * sin(r) 1.33 * 0.5 = 1.5 * sin(r) 0.665 = 1.5 * sin(r) sin(r) = 0.665 / 1.5 = 0.4433 r = arcsin(0.4433) = approximately 26.3 degrees"
+        }
+      ]
+    },
+    {
+      "question": {
+        "questionId": "3b",
+        "displayNumber": "Q3 (b).",
+        "text": "State one real-world application of total internal reflection.",
+        "marks": 2,
+        "page": 1
+      },
+      "status": "matched",
+      "regions": [
+        {
+          "regionId": "r4",
+          "questionLabel": "Ans 3 (b):",
+          "normalizedId": "3b",
+          "boundingBox": {
+            "x": 0.08,
+            "y": 0.7,
+            "width": 0.6,
+            "height": 0.06
+          },
+          "page": 1,
+          "confidence": 1,
+          "continuesOnNextPage": false,
+          "text": "Optical fibres use total internal reflection to transmit data as light pulses over long distances with minimal loss."
+        }
+      ]
+    },
+    {
+      "question": {
+        "questionId": "4",
+        "displayNumber": "Q4.",
+        "text": "Draw a ray diagram showing how a concave mirror forms a real, inverted image. Label the principal focus and centre of curvature.",
+        "marks": 6,
+        "page": 1
+      },
+      "status": "matched",
+      "regions": [
+        {
+          "regionId": "r5",
+          "questionLabel": "Ans 4:",
+          "normalizedId": "4",
+          "boundingBox": {
+            "x": 0.08,
+            "y": 0.8,
+            "width": 0.6,
+            "height": 0.06
+          },
+          "page": 1,
+          "confidence": 1,
+          "continuesOnNextPage": false,
+          "text": "[Ray diagram drawn - concave mirror with object beyond C, image formed between F and C, real and inverted]"
+        }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "url": "<PDF base64 — 3124 chars>",
+      "width": 595,
+      "height": 842
+    }
+  ]
+}

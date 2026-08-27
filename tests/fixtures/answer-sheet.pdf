@@ -1,0 +1,65 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R
+   /MediaBox [0 0 595 842]
+   /Contents 4 0 R
+   /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1728 >>
+stream
+BT /F1 12 Tf 50 750 Td (Student: Aryan Sharma     Class: 10-B     Roll No: 14) Tj ET
+BT /F1 12 Tf 50 722 Td (Subject: Science - Light & Optics) Tj ET
+BT /F1 12 Tf 50 694 Td (Date: 27 August 2026) Tj ET
+BT /F1 12 Tf 50 666 Td () Tj ET
+BT /F1 12 Tf 50 638 Td (Ans 1:) Tj ET
+BT /F1 12 Tf 50 610 Td (The speed of light in a vacuum is 3 x 10^8 metres per second) Tj ET
+BT /F1 12 Tf 50 582 Td (or approximately 299,792,458 m/s.) Tj ET
+BT /F1 12 Tf 50 554 Td () Tj ET
+BT /F1 12 Tf 50 526 Td (Ans 2:) Tj ET
+BT /F1 12 Tf 50 498 Td (Refractive index \(n\) is the ratio of the speed of light in) Tj ET
+BT /F1 12 Tf 50 470 Td (vacuum to the speed of light in the medium.) Tj ET
+BT /F1 12 Tf 50 442 Td (Formula: n = c / v  where c is speed in vacuum and v in medium.) Tj ET
+BT /F1 12 Tf 50 414 Td () Tj ET
+BT /F1 12 Tf 50 386 Td (Ans 3 \(a\):) Tj ET
+BT /F1 12 Tf 50 358 Td (Using Snells Law: n1 * sin\(i\) = n2 * sin\(r\)) Tj ET
+BT /F1 12 Tf 50 330 Td (1.33 * sin\(30\) = 1.5 * sin\(r\)) Tj ET
+BT /F1 12 Tf 50 302 Td (1.33 * 0.5 = 1.5 * sin\(r\)) Tj ET
+BT /F1 12 Tf 50 274 Td (0.665 = 1.5 * sin\(r\)) Tj ET
+BT /F1 12 Tf 50 246 Td (sin\(r\) = 0.665 / 1.5 = 0.4433) Tj ET
+BT /F1 12 Tf 50 218 Td (r = arcsin\(0.4433\) = approximately 26.3 degrees) Tj ET
+BT /F1 12 Tf 50 190 Td () Tj ET
+BT /F1 12 Tf 50 162 Td (Ans 3 \(b\):) Tj ET
+BT /F1 12 Tf 50 134 Td (Optical fibres use total internal reflection to transmit data) Tj ET
+BT /F1 12 Tf 50 106 Td (as light pulses over long distances with minimal loss.) Tj ET
+BT /F1 12 Tf 50 78 Td () Tj ET
+BT /F1 12 Tf 50 50 Td (Ans 4:) Tj ET
+BT /F1 12 Tf 50 22 Td ([Ray diagram drawn - concave mirror with object beyond C,) Tj ET
+BT /F1 12 Tf 50 -6 Td ( image formed between F and C, real and inverted]) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1
+   /BaseFont /Helvetica
+   /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000121 00000 n 
+0000000256 00000 n 
+0000002036 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+2139
+%%EOF

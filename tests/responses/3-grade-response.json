@@ -1,0 +1,9 @@
+{
+  "result": {
+    "questionId": "Q1",
+    "isCorrect": true,
+    "score": 2,
+    "maxScore": 2,
+    "feedback": "Correct. You provided both the standard approximation and the precise value."
+  }
+}

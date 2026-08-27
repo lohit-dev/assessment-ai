@@ -1,0 +1,34 @@
+{
+  "question": {
+    "questionId": "1",
+    "displayNumber": "Q1.",
+    "text": "What is the speed of light in a vacuum?",
+    "marks": 2,
+    "page": 1
+  },
+  "regions": [
+    {
+      "regionId": "r1",
+      "questionLabel": "Ans 1:",
+      "normalizedId": "1",
+      "boundingBox": {
+        "x": 0.08,
+        "y": 0.22,
+        "width": 0.65,
+        "height": 0.08
+      },
+      "page": 1,
+      "confidence": 1,
+      "continuesOnNextPage": false,
+      "text": "The speed of light in a vacuum is 3 x 10^8 metres per second or approximately 299,792,458 m/s."
+    }
+  ],
+  "pages": [
+    {
+      "page": 1,
+      "url": "<PDF base64 — 3124 chars>",
+      "width": 595,
+      "height": 842
+    }
+  ]
+}
