@@ -106,7 +106,7 @@ export default function TopBar() {
 
         <IconBtn ariaLabel="Notifications">
           <Bell size={17} strokeWidth={1.75} className="text-body" />
-          <span className="bg-accent absolute top-[7px] right-[7px] size-1.75 rounded-full outline-[1.5px] outline-white" />
+          <span className="bg-accent absolute top-1.75 right-1.75 size-1.75 rounded-full outline-[1.5px] outline-white" />
         </IconBtn>
 
         <IconBtn ariaLabel="AI features">

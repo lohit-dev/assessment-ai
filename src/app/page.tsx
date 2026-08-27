@@ -27,7 +27,7 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-b from-[#F5F5F5] to-[#E9E5E5] p-3 md:p-4">
+    <div className="flex min-h-screen bg-linear-to-b from-[#F5F5F5] to-[#E9E5E5] p-3 md:p-4">
       <Sidebar />
 
       <div className="flex flex-1 flex-col gap-3 md:ml-82">

@@ -255,7 +255,7 @@ export default function Sidebar() {
           </button>
         </div>
 
-        <button className="border-accent-glow relative mb-4 flex h-[42px] w-full items-center justify-center gap-2.5 rounded-full border-4 bg-[#272727] px-[43px] font-sans text-base font-medium tracking-[-0.64px] text-white shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90">
+        <button className="border-accent-glow relative mb-4 flex h-10.5 w-full items-center justify-center gap-2.5 rounded-full border-4 bg-[#272727] px-10.75 font-sans text-base font-medium tracking-[-0.64px] text-white shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90">
           <svg
             width="16"
             height="16"
@@ -279,7 +279,7 @@ export default function Sidebar() {
               className={clsx(
                 "font-heading flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-base tracking-[-0.64px] transition-colors",
                 active
-                  ? "text-body bg-[#F0F0F0] font-medium"
+                  ? "text-body bg-surface-alt font-medium"
                   : "text-muted-2/80 font-normal hover:bg-gray-50"
               )}
             >
