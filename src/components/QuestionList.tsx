@@ -22,6 +22,16 @@ export default function QuestionList({
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [allExpanded, setAllExpanded] = useState(false);
 
+  function handleSelect(questionId: string) {
+    onSelectQuestion(questionId);
+    setExpandedIds((prev) => {
+      if (prev.has(questionId)) return prev;
+      const next = new Set(prev);
+      next.add(questionId);
+      return next;
+    });
+  }
+
   function toggleExpand(questionId: string) {
     setExpandedIds((prev) => {
       const next = new Set(prev);
@@ -64,7 +74,7 @@ export default function QuestionList({
             isExpanded={expandedIds.has(m.question.questionId)}
             grade={grades[m.question.questionId]}
             isGrading={gradingIds.has(m.question.questionId)}
-            onSelect={() => onSelectQuestion(m.question.questionId)}
+            onSelect={() => handleSelect(m.question.questionId)}
             onToggleExpand={() => toggleExpand(m.question.questionId)}
           />
         ))}

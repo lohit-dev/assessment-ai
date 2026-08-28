@@ -115,6 +115,7 @@ export default function ResultsPage() {
   } = useAssessmentStore();
 
   const [retryKey, setRetryKey] = useState(0);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const [renderedPages, setRenderedPages] = useState<RenderedPage[]>([]);
   const [pagesLoading, setPagesLoading] = useState(true);
   const [gradingIds, setGradingIds] = useState<Set<string>>(new Set());
@@ -236,9 +237,18 @@ export default function ResultsPage() {
 
   return (
     <div className="flex min-h-screen bg-linear-to-b from-[#eeeeee] to-[#dadada] p-3 md:p-4">
-      <Sidebar variant="collapsed" />
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
+      />
 
-      <div className="flex flex-1 flex-col gap-3 md:ml-[88px]">
+      <div
+        className={
+          sidebarCollapsed
+            ? "flex flex-1 flex-col gap-3 transition-[margin] md:ml-[88px]"
+            : "flex flex-1 flex-col gap-3 transition-[margin] md:ml-82"
+        }
+      >
         <TopBar />
 
         <main className="flex flex-1 flex-col">

@@ -14,14 +14,20 @@ interface QuestionItemProps {
   onToggleExpand: () => void;
 }
 
-/** Splits "11 (a)" -> { main: "11", sub: "a." }; "7" -> { main: "7", sub: null } */
+/** Splits "11 (a)" -> { main: "11", sub: "a." }; "7" -> { main: "7", sub: null }.
+ *  Strips a leading "Q"/"Q." (however the source paper printed it) first, so the
+ *  badge always shows a bare number — the raw label is still shown in full
+ *  elsewhere (e.g. the answer sheet tag), this only affects the round badge. */
 function parseDisplayNumber(displayNumber: string): {
   main: string;
   sub: string | null;
 } {
-  const match = displayNumber.match(/^(\d+)\s*\(?\s*([a-zA-Z])\)?\.?\s*$/);
+  const stripped = displayNumber.replace(/^q\.?\s*/i, "").trim();
+  const match = stripped.match(/^(\d+)\s*\(?\s*([a-zA-Z])\)?\.?\s*$/);
   if (match) return { main: match[1], sub: `${match[2].toLowerCase()}.` };
-  return { main: displayNumber, sub: null };
+  const bare = stripped.match(/^(\d+)\.?\s*$/);
+  if (bare) return { main: bare[1], sub: null };
+  return { main: stripped || displayNumber, sub: null };
 }
 
 function scorePillStyle(score: number, maxScore: number) {
@@ -120,6 +126,7 @@ export default function QuestionItem({
               aria-label={isExpanded ? "Collapse" : "Expand"}
               onClick={(e) => {
                 e.stopPropagation();
+                onSelect();
                 onToggleExpand();
               }}
               className="bg-surface-soft flex items-center justify-center rounded-lg p-1 transition-colors hover:bg-gray-200"

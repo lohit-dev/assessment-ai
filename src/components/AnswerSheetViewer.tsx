@@ -39,7 +39,7 @@ export default function AnswerSheetViewer({
   }
 
   const shortLabel = selectedQuestion
-    ? `Q${selectedQuestion.displayNumber.replace(/\s+/g, "")}`
+    ? `Q${selectedQuestion.displayNumber.replace(/^q\.?\s*/i, "").replace(/\s+/g, "")}`
     : "";
 
   return (

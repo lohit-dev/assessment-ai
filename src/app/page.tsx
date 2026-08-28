@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
@@ -10,6 +11,7 @@ import { useAssessmentStore } from "@/store/useAssessmentStore";
 
 export default function UploadPage() {
   const router = useRouter();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const {
     questionPaperFile,
     answerSheetFile,
@@ -28,9 +30,18 @@ export default function UploadPage() {
 
   return (
     <div className="flex min-h-screen bg-linear-to-b from-[#F5F5F5] to-[#E9E5E5] p-3 md:p-4">
-      <Sidebar />
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
+      />
 
-      <div className="flex flex-1 flex-col gap-3 md:ml-82">
+      <div
+        className={
+          sidebarCollapsed
+            ? "flex flex-1 flex-col gap-3 transition-[margin] md:ml-[88px]"
+            : "flex flex-1 flex-col gap-3 transition-[margin] md:ml-82"
+        }
+      >
         <TopBar />
 
         <main className="flex flex-1 flex-col items-center justify-center px-4 pt-4 pb-8">

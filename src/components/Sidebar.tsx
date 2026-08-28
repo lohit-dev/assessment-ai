@@ -1,7 +1,6 @@
 "use client";
 
 import { Settings, PanelLeft, ChevronsRight } from "lucide-react";
-import Image from "next/image";
 import clsx from "clsx";
 
 function HomeIcon({
@@ -231,25 +230,29 @@ const navItems = [
 ];
 
 interface SidebarProps {
-  variant?: "expanded" | "collapsed";
+  /** Controlled: parent owns the state so it can adjust the content margin to match. */
+  collapsed: boolean;
+  onToggleCollapse: () => void;
 }
 
-export default function Sidebar({ variant = "expanded" }: SidebarProps) {
-  if (variant === "collapsed") {
+export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
+  if (collapsed) {
     return (
       <aside className="fixed top-[11px] left-[10px] z-40 hidden h-[calc(100vh-22px)] w-16 flex-col items-center justify-between rounded-2xl bg-white px-6 py-3 shadow-[0_32px_48px_0_rgba(0,0,0,0.20),0_16px_48px_0_rgba(0,0,0,0.12)] md:flex">
         <div className="flex flex-col items-center gap-14">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/assets/veda-ai.svg"
             alt="VedaAI logo"
             width={40}
             height={40}
-            priority
+            className="shrink-0"
           />
 
           <button
+            type="button"
             aria-label="AI Teacher's Toolkit"
-            className="border-accent-glow relative flex h-[42px] w-[42px] items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90"
+            className="border-accent-glow relative flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90"
           >
             <svg
               width="16"
@@ -272,7 +275,7 @@ export default function Sidebar({ variant = "expanded" }: SidebarProps) {
                 href="#"
                 aria-label={label}
                 className={clsx(
-                  "flex size-9 items-center justify-center rounded-lg transition-colors",
+                  "flex size-9 shrink-0 items-center justify-center rounded-lg transition-colors",
                   active
                     ? "bg-surface-alt text-body"
                     : "text-muted-2/80 hover:bg-gray-50"
@@ -287,18 +290,19 @@ export default function Sidebar({ variant = "expanded" }: SidebarProps) {
         <div className="flex flex-col items-center gap-2">
           <div className="bg-surface-alt flex items-center rounded-[11.5px] p-0.5">
             <div className="relative size-10 shrink-0 overflow-hidden rounded-lg">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/assets/delhi_public_school.svg"
                 alt="Delhi Public School logo"
-                fill
-                sizes="40px"
-                className="object-cover"
+                className="size-full object-cover"
               />
             </div>
           </div>
           <button
+            type="button"
             aria-label="Expand sidebar"
-            className="text-muted-2/80 flex items-center justify-center px-3 py-2"
+            onClick={onToggleCollapse}
+            className="text-muted-2/80 flex items-center justify-center rounded-md px-3 py-2 transition-colors hover:bg-gray-100"
           >
             <ChevronsRight size={18} />
           </button>
@@ -312,26 +316,32 @@ export default function Sidebar({ variant = "expanded" }: SidebarProps) {
       <div>
         <div className="mb-5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/assets/veda-ai.svg"
               alt="VedaAI logo"
               width={36}
               height={36}
-              priority
+              className="shrink-0"
             />
             <span className="font-heading text-body text-[28px] font-bold tracking-[-1.68px]">
               VedaAI
             </span>
           </div>
           <button
-            aria-label="Toggle sidebar"
+            type="button"
+            aria-label="Collapse sidebar"
+            onClick={onToggleCollapse}
             className="text-muted-2/80 rounded-md p-1.5 transition-colors hover:bg-gray-100"
           >
             <PanelLeft size={17} />
           </button>
         </div>
 
-        <button className="border-accent-glow relative mb-4 flex h-10.5 w-full items-center justify-center gap-2.5 rounded-full border-4 bg-[#272727] px-10.75 font-sans text-base font-medium tracking-[-0.64px] text-white shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90">
+        <button
+          type="button"
+          className="border-accent-glow relative mb-4 flex h-10.5 w-full items-center justify-center gap-2.5 rounded-full border-4 bg-[#272727] px-10.75 font-sans text-base font-medium tracking-[-0.64px] text-white shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90"
+        >
           <svg
             width="16"
             height="16"
@@ -377,12 +387,11 @@ export default function Sidebar({ variant = "expanded" }: SidebarProps) {
 
         <div className="bg-surface-alt flex items-center gap-3 rounded-2xl p-3">
           <div className="relative size-10 shrink-0 overflow-hidden rounded-full">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/assets/delhi_public_school.svg"
               alt="Delhi Public School logo"
-              fill
-              sizes="40px"
-              className="object-cover"
+              className="size-full object-cover"
             />
           </div>
           <div>
