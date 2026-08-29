@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "bun --bun next dev",
-    "build": "bun --bun next build",
+    "build": "bun --bun next build --webpack",
     "build:webpack": "bun --bun next build --webpack",
     "lint": "bunx eslint .",
     "format": "bunx prettier --check .",

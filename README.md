@@ -35,8 +35,8 @@ Other useful commands:
 ```bash
 bun run format       # Check Prettier formatting
 bun run lint         # Run ESLint
-bun run build        # Production build with Turbopack
-bun run build:webpack
+bun run build        # Production build with Webpack (deployment-safe)
+bun run build:webpack # Explicit Webpack production build
 bun run prepare      # Install Husky hooks
 ```
 
