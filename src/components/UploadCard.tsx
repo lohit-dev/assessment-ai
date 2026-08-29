@@ -5,6 +5,12 @@ import { X } from "lucide-react";
 import clsx from "clsx";
 import { getPageCount } from "@/lib/pdf/pageCount";
 
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 interface UploadCardProps {
   label: string;
   file: File | null;
@@ -187,7 +193,7 @@ export default function UploadCard({
                 {file.name}
               </p>
               <div className="flex items-center gap-1.5 text-[11px] leading-[1.4] tracking-[-0.04em] text-[rgba(94,94,94,0.8)] md:gap-2 md:text-[14px]">
-                <span>{(file.size / 1024 / 1024).toFixed(1)}MB</span>
+                <span>{formatFileSize(file.size)}</span>
                 <span className="size-1 rounded-full bg-[rgba(94,94,94,0.8)]" />
                 <span>
                   {pageCount != null ? pageCount : "…"} Page

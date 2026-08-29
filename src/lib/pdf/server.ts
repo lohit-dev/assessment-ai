@@ -1,14 +1,8 @@
 // Server-only. Never import from client components.
 import * as pdfjs from "pdfjs-dist/legacy/build/pdf.mjs";
-import { WorkerMessageHandler } from "pdfjs-dist/legacy/build/pdf.worker.mjs";
 import type { PageImage } from "@/types";
 
 export const PDF_DATA_URL_PREFIX = "data:application/pdf";
-
-const pdfjsGlobal = globalThis as typeof globalThis & {
-  pdfjsWorker?: { WorkerMessageHandler: typeof WorkerMessageHandler };
-};
-pdfjsGlobal.pdfjsWorker = { WorkerMessageHandler };
 
 /**
  * Read a PDF buffer and return one PageImage per page.
@@ -19,9 +13,11 @@ export async function pdfToImages(buffer: ArrayBuffer): Promise<PageImage[]> {
   const data = new Uint8Array(buffer.slice(0));
   const pdf = await pdfjs.getDocument({
     data,
+    // Serverless runtimes do not provide a stable worker-file URL.
+    disableWorker: true,
     useWorkerFetch: false,
     useSystemFonts: true,
-  }).promise;
+  } as Parameters<typeof pdfjs.getDocument>[0]).promise;
 
   const firstPage = await pdf.getPage(1);
   const { width, height } = firstPage.getViewport({ scale: 1 });

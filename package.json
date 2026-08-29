@@ -7,7 +7,7 @@
     "build": "bun --bun next build --webpack",
     "build:webpack": "bun --bun next build --webpack",
     "lint": "bunx eslint .",
-    "format": "bunx prettier --check .",
+    "format": "bunx prettier --write .",
     "prepare": "husky",
     "test": "bun run format && bun run lint && bun run build:webpack && bunx jest --runInBand"
   },
