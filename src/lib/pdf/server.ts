@@ -1,6 +1,3 @@
-// Server-only. Never import from client components.
-import "ws";
-
 import type { PageImage } from "@/types";
 
 export const PDF_DATA_URL_PREFIX = "data:application/pdf";
@@ -11,28 +8,21 @@ export const PDF_DATA_URL_PREFIX = "data:application/pdf";
  * receive the document as a single inline part — no per-page rendering.
  */
 export async function pdfToImages(buffer: ArrayBuffer): Promise<PageImage[]> {
-  const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
-  const data = new Uint8Array(buffer.slice(0));
-  const pdf = await pdfjs.getDocument({
-    data,
-    // Serverless runtimes do not provide a stable worker-file URL.
-    disableWorker: true,
-    useWorkerFetch: false,
-    useSystemFonts: true,
-  } as Parameters<typeof pdfjs.getDocument>[0]).promise;
-
-  const firstPage = await pdf.getPage(1);
-  const { width, height } = firstPage.getViewport({ scale: 1 });
-  firstPage.cleanup();
-
   const dataUrl = `${PDF_DATA_URL_PREFIX};base64,${Buffer.from(buffer).toString("base64")}`;
+  const pageCount = countPdfPages(buffer);
 
-  return Array.from({ length: pdf.numPages }, (_, i) => ({
+  return Array.from({ length: pageCount }, (_, i) => ({
     page: i + 1,
     url: dataUrl,
-    width: Math.round(width),
-    height: Math.round(height),
+    width: 0,
+    height: 0,
   }));
+}
+
+function countPdfPages(buffer: ArrayBuffer): number {
+  const source = Buffer.from(buffer).toString("latin1");
+  const matches = source.match(/\/Type\s*\/Page(?:\s|\/|>>)/g);
+  return Math.max(1, matches?.length ?? 1);
 }
 
 export function pdfToBase64(buffer: ArrayBuffer): string {
