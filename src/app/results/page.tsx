@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 import Sidebar from "@/components/Sidebar";
 import TopBar from "@/components/TopBar";
 import LoadingState from "@/components/LoadingState";
@@ -61,6 +62,38 @@ export default function ResultsPage() {
   const [gradingIds, setGradingIds] = useState<Set<string>>(new Set());
   const [mobileTab, setMobileTab] = useState<MobileTab>("questions");
 
+  const { mutate: startExtraction, isPending: isExtracting } = useMutation({
+    mutationKey: ["assessment-extraction"],
+    mutationFn: async ({
+      questionPaper,
+      answerSheet,
+    }: {
+      questionPaper: File;
+      answerSheet: File;
+    }) => {
+      setError(null);
+      setStage("extracting-questions");
+      const { questions: extractedQs, pages: qPages } =
+        await extractQuestions(questionPaper);
+      setQuestions(extractedQs);
+      setQuestionPaperPages(qPages);
+
+      setStage("extracting-answers");
+      const {
+        regions,
+        mapped: mappedResult,
+        pages: aPages,
+      } = await extractAnswers(answerSheet, extractedQs);
+      setAnswerRegions(regions);
+      setMapped(mappedResult);
+      setAnswerSheetPages(aPages);
+    },
+    onSuccess: () => setStage("done"),
+    onError: (err) => {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+    },
+  });
+
   useEffect(() => {
     if (hasRun.current) return;
     if (!questionPaperFile || !answerSheetFile) {
@@ -69,31 +102,10 @@ export default function ResultsPage() {
     }
     hasRun.current = true;
 
-    async function run() {
-      try {
-        setError(null);
-        setStage("extracting-questions");
-        const { questions: extractedQs, pages: qPages } =
-          await extractQuestions(questionPaperFile!);
-        setQuestions(extractedQs);
-        setQuestionPaperPages(qPages);
-
-        setStage("extracting-answers");
-        const {
-          regions,
-          mapped: mappedResult,
-          pages: aPages,
-        } = await extractAnswers(answerSheetFile!, extractedQs);
-        setAnswerRegions(regions);
-        setMapped(mappedResult);
-        setAnswerSheetPages(aPages);
-
-        setStage("done");
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong.");
-      }
-    }
-    run();
+    startExtraction({
+      questionPaper: questionPaperFile,
+      answerSheet: answerSheetFile,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [retryKey, questionPaperFile, answerSheetFile]);
 
@@ -156,6 +168,7 @@ export default function ResultsPage() {
   }
 
   const isLoading =
+    isExtracting ||
     stage === "uploading" ||
     stage === "extracting-questions" ||
     stage === "extracting-answers" ||
