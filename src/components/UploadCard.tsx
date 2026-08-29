@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import clsx from "clsx";
-import { getPageCount } from "@/lib/getPageCount";
+import { getPageCount } from "@/lib/pdf/pageCount";
 
 interface UploadCardProps {
   label: string;
@@ -26,10 +26,7 @@ export default function UploadCard({
   const [pageCount, setPageCount] = useState<number | null>(null);
 
   useEffect(() => {
-    if (!file) {
-      setPageCount(null);
-      return;
-    }
+    if (!file) return;
     let cancelled = false;
     getPageCount(file)
       .then((n) => {
@@ -51,6 +48,7 @@ export default function UploadCard({
       return;
     }
     setError(null);
+    setPageCount(null);
     onFileSelect(picked);
   }
 

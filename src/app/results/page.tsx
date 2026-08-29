@@ -9,14 +9,12 @@ import QuestionList from "@/components/QuestionList";
 import AnswerSheetViewer from "@/components/AnswerSheetViewer";
 import MobileTabToggle, { type MobileTab } from "@/components/MobileTabToggle";
 import { useAssessmentStore } from "@/store/useAssessmentStore";
-import { renderPdfPages, type RenderedPage } from "@/lib/renderPdfPages";
-import type {
-  Question,
-  AnswerRegion,
-  MappedQuestion,
-  PageImage,
-  GradeResult,
-} from "@/types";
+import { renderPdfPages, type RenderedPage } from "@/lib/pdf/client";
+import {
+  extractAnswers,
+  extractQuestions,
+  gradeQuestion,
+} from "@/features/assessment/client";
 
 const STAGE_COPY: Partial<Record<string, { title: string; subtitle: string }>> =
   {
@@ -30,62 +28,6 @@ const STAGE_COPY: Partial<Record<string, { title: string; subtitle: string }>> =
       subtitle: "Matching answers to each question",
     },
   };
-
-async function extractQuestions(
-  file: File
-): Promise<{ questions: Question[]; pages: PageImage[] }> {
-  const formData = new FormData();
-  formData.append("file", file);
-  const res = await fetch("/api/extract-questions", {
-    method: "POST",
-    body: formData,
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => null);
-    throw new Error(body?.error ?? "Failed to extract questions.");
-  }
-  return res.json();
-}
-
-async function extractAnswers(
-  file: File,
-  questions: Question[]
-): Promise<{
-  regions: AnswerRegion[];
-  mapped: MappedQuestion[];
-  pages: PageImage[];
-}> {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("questions", JSON.stringify(questions));
-  const res = await fetch("/api/extract-answers", {
-    method: "POST",
-    body: formData,
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => null);
-    throw new Error(body?.error ?? "Failed to extract answers.");
-  }
-  return res.json();
-}
-
-async function gradeOne(
-  question: Question,
-  regions: AnswerRegion[],
-  pages: PageImage[]
-): Promise<GradeResult> {
-  const res = await fetch("/api/grade", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ question, regions, pages }),
-  });
-  if (!res.ok) {
-    const body = await res.json().catch(() => null);
-    throw new Error(body?.error ?? "Failed to grade question.");
-  }
-  const { result } = await res.json();
-  return result as GradeResult;
-}
 
 export default function ResultsPage() {
   const router = useRouter();
@@ -184,7 +126,7 @@ export default function ResultsPage() {
     setGradingIds(new Set(gradable.map((m) => m.question.questionId)));
 
     gradable.forEach((m) => {
-      gradeOne(m.question, m.regions, answerSheetPages)
+      gradeQuestion(m.question, m.regions, answerSheetPages)
         .then((result) => setGrade(m.question.questionId, result))
         .catch(() => {})
         .finally(() => {

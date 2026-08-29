@@ -6,8 +6,9 @@ import type {
   ExamSummary,
   PageImage,
 } from "@/types";
-import { geminiJSON, buildImageParts } from "@/lib/gemini";
-import { GRADE_SYSTEM, gradeUserPrompt } from "@/lib/prompts";
+import { geminiJSON, buildImageParts } from "@/lib/ai/client";
+import { GRADE_SYSTEM, gradeUserPrompt } from "@/lib/ai/prompts";
+import { errorResponse } from "@/lib/http/response";
 
 export const runtime = "nodejs";
 
@@ -23,34 +24,21 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     body = (await req.json()) as GradeRequestBody;
   } catch {
-    return NextResponse.json(
-      { error: "Request body must be valid JSON." },
-      { status: 400 }
-    );
+    return errorResponse(400, "Request body must be valid JSON.");
   }
 
   const { question, regions, pages, allGrades } = body;
 
   if (!question || typeof question.questionId !== "string") {
-    return NextResponse.json(
-      { error: 'Missing or invalid "question".' },
-      { status: 400 }
-    );
+    return errorResponse(400, 'Missing or invalid "question".');
   }
   if (!Array.isArray(regions)) {
-    return NextResponse.json(
-      { error: '"regions" must be an array.' },
-      { status: 400 }
-    );
+    return errorResponse(400, '"regions" must be an array.');
   }
   if (!Array.isArray(pages)) {
-    return NextResponse.json(
-      { error: '"pages" must be an array.' },
-      { status: 400 }
-    );
+    return errorResponse(400, '"pages" must be an array.');
   }
 
-  // unanswered questions
   if (regions.length === 0) {
     return NextResponse.json({
       result: {
@@ -65,9 +53,9 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   const docParts = buildImageParts(pages);
   if (docParts.length === 0) {
-    return NextResponse.json(
-      { error: "Could not resolve any page images for this question." },
-      { status: 422 }
+    return errorResponse(
+      422,
+      "Could not resolve any page images for this question."
     );
   }
 
@@ -80,19 +68,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   } catch (err) {
     console.error("[grade] Gemini error:", err);
-    return NextResponse.json(
-      { error: "AI grading failed. Please try again." },
-      { status: 502 }
-    );
+    return errorResponse(502, "AI grading failed. Please try again.");
   }
 
   const result = coerceGradeResult(rawResult, question);
   if (!result) {
     console.error("[grade] Unexpected Gemini response:", rawResult);
-    return NextResponse.json(
-      { error: "Unexpected grading response from AI." },
-      { status: 502 }
-    );
+    return errorResponse(502, "Unexpected grading response from AI.");
   }
 
   const summary =

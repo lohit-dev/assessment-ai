@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "dev": "bun --bun next dev",
+    "build": "bun --bun next build",
+    "build:webpack": "bun --bun next build --webpack",
+    "start": "bun --bun next start",
+    "lint": "bunx eslint .",
+    "format": "bunx prettier --write .",
+    "format:check": "bunx prettier --check .",
     "prepare": "husky",
-    "test": "jest --runInBand",
-    "test:watch": "jest --runInBand --watch"
+    "test": "bun run build:webpack && bunx jest --runInBand",
+    "test:ai": "RUN_AI_TESTS=true bun run test",
+    "test:watch": "bun run build:webpack && bunx jest --runInBand --watch",
+    "check": "bun run format:check && bun run lint && bun run test"
   },
   "dependencies": {
     "@google/genai": "^2.19.0",

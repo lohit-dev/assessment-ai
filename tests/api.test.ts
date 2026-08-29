@@ -39,12 +39,16 @@ import type {
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://127.0.0.1:3100";
 const FIXTURES = path.join(__dirname, "fixtures");
 
 function hasApiKey(): boolean {
   const key = process.env.GEMINI_API_KEY;
-  return Boolean(key) && key !== "your_gemini_api_key_here";
+  return (
+    process.env.RUN_AI_TESTS === "true" &&
+    Boolean(key) &&
+    key !== "your_gemini_api_key_here"
+  );
 }
 
 function aiTest(name: string, fn: () => Promise<void>, timeout?: number): void {

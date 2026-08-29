@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Minus, Plus, ChevronLeft, ChevronRight } from "lucide-react";
-import type { RenderedPage } from "@/lib/renderPdfPages";
+import type { RenderedPage } from "@/lib/pdf/client";
 import type { AnswerRegion, Question } from "@/types";
 
 interface AnswerSheetViewerProps {

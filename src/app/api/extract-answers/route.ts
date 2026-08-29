@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { Question, AnswerRegion, PageImage } from "@/types";
-import { pdfToImages, pdfToBase64 } from "@/lib/pdfToImages";
-import {
-  geminiJSON,
-  buildPdfPart,
-  buildImagePartsFromDataUrls,
-} from "@/lib/gemini";
+import type { Question, AnswerRegion } from "@/types";
+import { geminiJSON } from "@/lib/ai/client";
 import {
   EXTRACT_ANSWERS_SYSTEM,
   extractAnswersUserPrompt,
-} from "@/lib/prompts";
-import { matchRegionsToQuestions } from "@/lib/matching";
-import type { Part } from "@google/genai";
+} from "@/lib/ai/prompts";
+import { matchRegionsToQuestions } from "@/lib/ai/matching";
+import {
+  createAiDocument,
+  SUPPORTED_DOCUMENT_TYPES,
+} from "@/features/assessment/server/document";
+import { errorResponse } from "@/lib/http/response";
 
 export const runtime = "nodejs";
 
@@ -20,22 +19,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     formData = await req.formData();
   } catch {
-    return NextResponse.json({ error: "Invalid form data." }, { status: 400 });
+    return errorResponse(400, "Invalid form data.");
   }
 
   const file = formData.get("file");
   if (!(file instanceof File)) {
-    return NextResponse.json(
-      { error: 'Missing required field "file".' },
-      { status: 400 }
-    );
+    return errorResponse(400, 'Missing required field "file".');
   }
 
   const questionsRaw = formData.get("questions");
   if (typeof questionsRaw !== "string") {
-    return NextResponse.json(
-      { error: 'Missing required field "questions" (JSON string).' },
-      { status: 400 }
+    return errorResponse(
+      400,
+      'Missing required field "questions" (JSON string).'
     );
   }
 
@@ -45,79 +41,44 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     if (!Array.isArray(parsed)) throw new Error("questions must be an array");
     questions = parsed as Question[];
   } catch (err) {
-    return NextResponse.json(
-      { error: `Invalid "questions" JSON: ${(err as Error).message}` },
-      { status: 400 }
+    return errorResponse(
+      400,
+      `Invalid "questions" JSON: ${(err as Error).message}`
     );
   }
 
-  const allowedTypes = [
-    "application/pdf",
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-  ];
-  if (!allowedTypes.includes(file.type)) {
-    return NextResponse.json(
-      { error: `Unsupported file type: ${file.type}.` },
-      { status: 415 }
-    );
+  if (!SUPPORTED_DOCUMENT_TYPES.has(file.type)) {
+    return errorResponse(415, `Unsupported file type: ${file.type}.`);
   }
 
-  let parts: Part[];
-  let pages: PageImage[];
-  let totalPages: number;
+  let document: Awaited<ReturnType<typeof createAiDocument>>;
 
   try {
-    const buffer = await file.arrayBuffer();
-
-    if (file.type === "application/pdf") {
-      pages = await pdfToImages(buffer);
-      totalPages = pages.length;
-      parts = [buildPdfPart(pdfToBase64(buffer))];
-    } else {
-      const base64 = Buffer.from(buffer).toString("base64");
-      const dataUrl = `data:${file.type};base64,${base64}`;
-      pages = [{ page: 1, url: dataUrl, width: 0, height: 0 }];
-      totalPages = 1;
-      parts = buildImagePartsFromDataUrls([dataUrl]);
-    }
+    document = await createAiDocument(file);
   } catch (err) {
     console.error("[extract-answers] file processing error:", err);
-    return NextResponse.json(
-      { error: "Failed to process the uploaded file." },
-      { status: 422 }
-    );
+    return errorResponse(422, "Failed to process the uploaded file.");
   }
 
-  if (pages.length === 0) {
-    return NextResponse.json(
-      { error: "The file has no readable pages." },
-      { status: 422 }
-    );
+  if (document.pages.length === 0) {
+    return errorResponse(422, "The file has no readable pages.");
   }
 
   let rawResult: unknown;
   try {
     rawResult = await geminiJSON(
       EXTRACT_ANSWERS_SYSTEM,
-      extractAnswersUserPrompt(totalPages, questions),
-      parts
+      extractAnswersUserPrompt(document.pages.length, questions),
+      document.parts
     );
   } catch (err) {
     console.error("[extract-answers] Gemini error:", err);
-    return NextResponse.json(
-      { error: "AI extraction failed. Please try again." },
-      { status: 502 }
-    );
+    return errorResponse(502, "AI extraction failed. Please try again.");
   }
 
   if (!Array.isArray(rawResult)) {
     console.error("[extract-answers] Unexpected Gemini response:", rawResult);
-    return NextResponse.json(
-      { error: "Unexpected response from AI. Please try again." },
-      { status: 502 }
-    );
+    return errorResponse(502, "Unexpected response from AI. Please try again.");
   }
 
   const regions: AnswerRegion[] = (rawResult as Record<string, unknown>[])
@@ -138,7 +99,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
   const mapped = matchRegionsToQuestions(questions, regions);
 
-  return NextResponse.json({ regions, mapped, pages });
+  return NextResponse.json({ regions, mapped, pages: document.pages });
 }
 
 function isAnswerRegionShape(v: unknown): v is Record<string, unknown> {
