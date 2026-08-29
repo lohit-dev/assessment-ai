@@ -53,12 +53,12 @@ export default function QuestionList({
 
   return (
     /* Outer container: half-white backdrop, rounded, flex column */
-    <div className="flex h-full min-h-0 w-full flex-1 flex-col gap-3 overflow-hidden rounded-[20px] bg-white/50 p-4 md:max-w-[672px] md:flex-none">
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col gap-3 overflow-hidden rounded-[20px] bg-white/50 p-4 md:max-w-2xl md:flex-none">
       {/* Header row */}
       <div className="flex w-full shrink-0 items-center justify-between gap-2">
-        <p className="font-heading text-[14px] leading-[1.4] font-bold tracking-[-0.56px] text-[#303030] md:text-[16px] md:tracking-[-0.64px]">
+        <p className="font-heading text-body text-[14px] leading-[1.4] font-bold tracking-[-0.56px] md:text-[16px] md:tracking-[-0.64px]">
           Extracted Questions{" "}
-          <span className="hidden text-[#303030] md:inline">
+          <span className="text-body hidden md:inline">
             (from question paper)
           </span>
         </p>

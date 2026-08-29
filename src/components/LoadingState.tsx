@@ -20,7 +20,7 @@ export default function LoadingState({
 }: LoadingStateProps) {
   return (
     <div className="animate-fade-in flex min-h-[calc(100vh-120px)] w-full flex-1 items-center justify-center rounded-3xl bg-white px-4 py-10 md:min-h-[calc(100vh-88px)]">
-      <div className="flex flex-col items-center justify-center gap-[15px]">
+      <div className="flex flex-col items-center justify-center gap-3.75">
         {/* Animated loader SVG — pulse matches Figma spinning loader */}
         <Image
           src="/images/ui/loader.svg"
@@ -37,10 +37,10 @@ export default function LoadingState({
           key={title}
           className="animate-fade-in-up flex flex-col items-center gap-0.5 text-center"
         >
-          <p className="font-heading animate-shimmer-text text-[28px] leading-[36px] font-bold tracking-[-1.2px] md:text-[30px]">
+          <p className="font-heading animate-shimmer-text text-[28px] leading-9 font-bold tracking-[-1.2px] md:text-[30px]">
             {title}
           </p>
-          <p className="font-heading text-[18px] leading-[36px] tracking-[-1.2px] text-[rgba(70,70,70,0.75)] md:text-[20px]">
+          <p className="font-heading text-[18px] leading-9 tracking-[-1.2px] text-[rgba(70,70,70,0.75)] md:text-[20px]">
             {subtitle}
           </p>
         </div>

@@ -45,9 +45,9 @@ export default function AnswerSheetViewer({
 
   return (
     /* Outer card: white bg, rounded, flex column, fills remaining width */
-    <div className="flex h-full min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-[20px] border-[1.25px] border-[#cecece]/60 bg-white">
+    <div className="border-hairline/60 flex h-full min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-[20px] border-[1.25px] bg-white">
       {/* ── Header bar (dark #303030 background) ── */}
-      <div className="flex h-14 w-full shrink-0 items-center justify-between gap-2 bg-[#303030] px-4 py-3 md:h-16 md:px-6">
+      <div className="bg-body flex h-14 w-full shrink-0 items-center justify-between gap-2 px-4 py-3 md:h-16 md:px-6">
         <p className="font-heading shrink-0 text-[14px] font-bold tracking-[-0.56px] text-white/80 md:text-[16px] md:tracking-[-0.64px]">
           Answer Sheet
         </p>
@@ -164,7 +164,7 @@ export default function AnswerSheetViewer({
                     className="pointer-events-none absolute z-10 rounded-2xl border-2 border-[#3dd218] bg-[rgba(94,255,53,0.1)]"
                     style={regionStyle(region)}
                   >
-                    <span className="absolute -top-[28px] left-3 z-20 rounded-t-xl bg-[#34ac15] px-3 py-1 text-[16px] leading-[1.4] font-bold tracking-[-0.64px] text-white">
+                    <span className="absolute -top-7 left-3 z-20 rounded-t-xl bg-[#34ac15] px-3 py-1 text-[16px] leading-[1.4] font-bold tracking-[-0.64px] text-white">
                       {shortLabel}
                     </span>
                   </div>

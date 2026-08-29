@@ -239,7 +239,7 @@ interface SidebarProps {
 export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
   if (collapsed) {
     return (
-      <aside className="fixed top-[11px] left-[10px] z-40 hidden h-[calc(100vh-22px)] w-16 flex-col items-center justify-between rounded-2xl bg-white px-6 py-3 shadow-[0px_16px_24px_0_rgba(0,0,0,0.12),0px_32px_24px_0_rgba(0,0,0,0.2)] md:flex">
+      <aside className="fixed top-2.75 left-2.5 z-40 hidden h-[calc(100vh-22px)] w-16 flex-col items-center justify-between rounded-2xl bg-white px-6 py-3 shadow-[0px_16px_24px_0_rgba(0,0,0,0.12),0px_32px_24px_0_rgba(0,0,0,0.2)] md:flex">
         <div className="flex flex-col items-center gap-14">
           <Link href="/" aria-label="Go to home" className="shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -255,7 +255,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
           <button
             type="button"
             aria-label="AI Teacher's Toolkit"
-            className="border-accent-glow relative flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
+            className="border-accent-glow w-w-10.5hrink-0 relative flex h-10.5 items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
           >
             <svg
               width="16"
@@ -347,7 +347,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
 
         <button
           type="button"
-          className="border-accent-glow relative mx-auto mb-4 flex h-[42px] w-[251px] shrink-0 items-center justify-center gap-2 rounded-full border-4 bg-[#272727] font-sans text-[16px] leading-[28px] font-medium tracking-[-0.64px] whitespace-nowrap text-white shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
+          className="border-accent-glow relative mx-auto mb-4 flex h-10.5 w-62.75 shrink-0 items-center justify-center gap-2 rounded-full border-4 bg-[#272727] font-sans text-[16px] leading-7 font-medium tracking-[-0.64px] whitespace-nowrap text-white shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
         >
           <svg
             width="16"

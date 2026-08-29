@@ -179,7 +179,7 @@ export default function ResultsPage() {
       <div
         className={
           sidebarCollapsed
-            ? "flex flex-1 flex-col gap-3 transition-[margin] duration-200 md:ml-[88px]"
+            ? "flex flex-1 flex-col gap-3 transition-[margin] duration-200 md:ml-22"
             : "flex flex-1 flex-col gap-3 transition-[margin] duration-200 md:ml-82"
         }
       >
@@ -188,13 +188,13 @@ export default function ResultsPage() {
         <main className="flex flex-1 flex-col">
           {stage === "error" ? (
             <div className="animate-fade-in-up flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
-              <p className="font-heading text-xl font-bold text-[#2b2b2b]">
+              <p className="font-heading text-heading text-xl font-bold">
                 Something went wrong
               </p>
               <p className="max-w-md text-sm text-gray-500">{error}</p>
               <button
                 onClick={handleRetry}
-                className="font-heading mt-2 rounded-full bg-[#303030] px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="font-heading bg-body mt-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
               >
                 Try again
               </button>
@@ -203,7 +203,7 @@ export default function ResultsPage() {
             <LoadingState title={copy.title} subtitle={copy.subtitle} />
           ) : mapped.length === 0 ? (
             <div className="animate-fade-in-up flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
-              <p className="font-heading text-xl font-bold text-[#2b2b2b]">
+              <p className="font-heading text-heading text-xl font-bold">
                 No questions found
               </p>
               <p className="max-w-md text-sm text-gray-500">
@@ -212,7 +212,7 @@ export default function ResultsPage() {
               </p>
               <button
                 onClick={() => router.push("/")}
-                className="font-heading mt-2 rounded-full bg-[#303030] px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="font-heading bg-body mt-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
               >
                 Upload again
               </button>
@@ -240,8 +240,8 @@ export default function ResultsPage() {
                 <div
                   className={
                     mobileTab === "questions"
-                      ? "flex flex-1 flex-col md:flex md:max-w-[672px] md:flex-none"
-                      : "hidden md:flex md:max-w-[672px] md:flex-none md:flex-col"
+                      ? "flex flex-1 flex-col md:flex md:max-w-2xl md:flex-none"
+                      : "hidden md:flex md:max-w-2xl md:flex-none md:flex-col"
                   }
                 >
                   <QuestionList

@@ -61,7 +61,7 @@ export default function QuestionItem({
       className={clsx(
         "font-heading flex w-full cursor-pointer flex-col items-start gap-3 rounded-2xl p-3 transition-all",
         isSelected && !isUnmatched
-          ? "border-2 border-[#ff5623] bg-white shadow-sm"
+          ? "border-accent border-2 bg-white shadow-sm"
           : "border border-transparent bg-white",
         isUnmatched && "border border-dashed border-gray-300 bg-white"
       )}
@@ -75,21 +75,21 @@ export default function QuestionItem({
               "flex size-8 shrink-0 items-center justify-center rounded-full border-2 border-white/25 text-[20px] font-extrabold tracking-[-0.8px] text-white",
               "shadow-[0_8px_8.8px_0_rgba(134,134,134,0.1),0_4px_16px_0_rgba(67,67,67,0.1)]",
               isSelected && !isUnmatched
-                ? "bg-[#ff5623] shadow-[0_8px_4.4px_rgba(255,121,80,0.1)]"
+                ? "bg-accent shadow-[0_8px_4.4px_rgba(255,121,80,0.1)]"
                 : "bg-[rgba(43,43,43,0.8)]"
             )}
           >
             {isUnmatched ? "?" : main}
           </div>
           {sub && !isUnmatched && (
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#f6f6f6] text-[16px] font-bold tracking-[-0.64px] text-[#303030]">
+            <div className="bg-surface-soft text-body flex size-8 shrink-0 items-center justify-center rounded-full text-[16px] font-bold tracking-[-0.64px]">
               {sub}
             </div>
           )}
         </div>
 
         {/* Question text */}
-        <p className="min-w-0 flex-1 text-[14px] leading-[1.4] tracking-[-0.56px] text-[#303030] md:text-[16px] md:tracking-[-0.64px]">
+        <p className="text-body min-w-0 flex-1 text-[14px] leading-[1.4] tracking-[-0.56px] md:text-[16px] md:tracking-[-0.64px]">
           {isUnmatched ? (
             <>
               <span className="text-[rgba(94,94,94,0.55)]">Unrecognized: </span>
@@ -108,11 +108,11 @@ export default function QuestionItem({
               Unmatched
             </span>
           ) : status === "unanswered" ? (
-            <span className="rounded-full bg-[#f6f6f6] px-3 py-1 text-[14px] font-bold tracking-[-0.56px] text-[rgba(94,94,94,0.8)]">
+            <span className="bg-surface-soft rounded-full px-3 py-1 text-[14px] font-bold tracking-[-0.56px] text-[rgba(94,94,94,0.8)]">
               —
             </span>
           ) : isGrading ? (
-            <span className="rounded-full bg-[#f6f6f6] px-3 py-1 text-[14px] font-bold tracking-[-0.56px] text-[rgba(94,94,94,0.8)]">
+            <span className="bg-surface-soft rounded-full px-3 py-1 text-[14px] font-bold tracking-[-0.56px] text-[rgba(94,94,94,0.8)]">
               …
             </span>
           ) : grade ? (
@@ -136,12 +136,12 @@ export default function QuestionItem({
                 onSelect();
                 onToggleExpand();
               }}
-              className="flex items-center justify-center rounded-lg bg-[#f6f6f6] p-1 transition-colors hover:bg-gray-200"
+              className="bg-surface-soft flex items-center justify-center rounded-lg p-1 transition-colors hover:bg-gray-200"
             >
               {isExpanded ? (
-                <ChevronUp size={20} className="text-[#303030]" />
+                <ChevronUp size={20} className="text-body" />
               ) : (
-                <ChevronDown size={20} className="text-[#303030]" />
+                <ChevronDown size={20} className="text-body" />
               )}
             </button>
           )}
@@ -150,11 +150,11 @@ export default function QuestionItem({
 
       {/* Expanded AI Feedback panel */}
       {isExpanded && grade?.feedback && (
-        <div className="flex w-full flex-col gap-2.5 rounded-2xl bg-[#f6f6f6] px-4 py-4 md:px-6">
-          <p className="text-[16px] font-bold tracking-[-0.64px] text-[#303030]">
+        <div className="bg-surface-soft flex w-full flex-col gap-2.5 rounded-2xl px-4 py-4 md:px-6">
+          <p className="text-body text-[16px] font-bold tracking-[-0.64px]">
             AI Feedback
           </p>
-          <p className="text-[14px] leading-[1.4] tracking-[-0.56px] text-[#303030]">
+          <p className="text-body text-[14px] leading-[1.4] tracking-[-0.56px]">
             {grade.feedback}
           </p>
         </div>

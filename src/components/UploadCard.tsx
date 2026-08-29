@@ -67,14 +67,14 @@ export default function UploadCard({
       onClick={() => !file && inputRef.current?.click()}
       className={clsx(
         "relative flex w-full flex-1 flex-col items-center justify-center gap-3",
-        "min-h-[120px] rounded-[20px] border-[1.5px] border-dashed bg-white",
+        "min-h-30 rounded-[20px] border-[1.5px] border-dashed bg-white",
         "px-4 py-5 text-center transition-all",
-        "md:min-h-[181px]",
+        "md:min-h-45.25",
         isDragging
-          ? "cursor-copy border-[#ff5623] bg-[rgba(255,147,80,0.05)]"
+          ? "border-accent cursor-copy bg-[rgba(255,147,80,0.05)]"
           : file
-            ? "cursor-default border-[#cecece]"
-            : "cursor-pointer border-[#cecece] hover:border-gray-400"
+            ? "border-hairline cursor-default"
+            : "border-hairline cursor-pointer hover:border-gray-400"
       )}
     >
       <input
@@ -89,9 +89,9 @@ export default function UploadCard({
       {!file && (
         <>
           {/* Upload icon box */}
-          <div className="flex size-10 items-center justify-center rounded-lg bg-[#f3f3f3] md:size-12">
+          <div className="bg-surface-muted flex size-10 items-center justify-center rounded-lg md:size-12">
             <svg
-              className="text-[#303030]"
+              className="text-body"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -127,8 +127,8 @@ export default function UploadCard({
 
           {/* Label + size hint */}
           <div className="flex flex-col items-center gap-0.5">
-            <p className="font-heading text-[18px] leading-[22px] font-semibold tracking-[-0.06em] text-[#303030] md:text-[20px]">
-              Upload <span className="text-[#ff5623]">{label}</span>
+            <p className="font-heading text-body text-[18px] leading-5.5 font-semibold tracking-[-0.06em] md:text-[20px]">
+              Upload <span className="text-accent">{label}</span>
             </p>
             <p className="font-heading text-[12px] leading-[1.4] tracking-[-0.06em] text-[rgba(94,94,94,0.55)] md:text-[14px]">
               Max {maxSizeMb}MB
@@ -141,7 +141,7 @@ export default function UploadCard({
       {file && (
         <div className="relative w-full">
           {/* File pill */}
-          <div className="flex items-center gap-3 rounded-xl bg-[#f6f6f6] py-3 pr-4 pl-3">
+          <div className="bg-surface-soft flex items-center gap-3 rounded-xl py-3 pr-4 pl-3">
             {/* Document thumbnail SVG */}
             <div className="shrink-0">
               <svg
@@ -183,12 +183,12 @@ export default function UploadCard({
 
             {/* File name + meta */}
             <div className="min-w-0 flex-1 text-left">
-              <p className="font-heading max-w-[160px] truncate text-[13px] leading-[1.4] font-bold tracking-[-0.04em] text-[#2b2b2b] md:max-w-[200px] md:text-[16px]">
+              <p className="font-heading text-heading max-w-40 truncate text-[13px] leading-[1.4] font-bold tracking-[-0.04em] md:max-w-50 md:text-[16px]">
                 {file.name}
               </p>
               <div className="flex items-center gap-1.5 text-[11px] leading-[1.4] tracking-[-0.04em] text-[rgba(94,94,94,0.8)] md:gap-2 md:text-[14px]">
                 <span>{(file.size / 1024 / 1024).toFixed(1)}MB</span>
-                <span className="size-[4px] rounded-full bg-[rgba(94,94,94,0.8)]" />
+                <span className="size-1 rounded-full bg-[rgba(94,94,94,0.8)]" />
                 <span>
                   {pageCount != null ? pageCount : "…"} Page
                   {pageCount === 1 ? "" : "s"}
@@ -205,7 +205,7 @@ export default function UploadCard({
               onFileSelect(null);
               if (inputRef.current) inputRef.current.value = "";
             }}
-            className="absolute -top-2.5 -right-2.5 flex size-[26px] items-center justify-center rounded-full bg-[rgba(43,43,43,0.8)] text-white shadow-[0_4px_11px_0_rgba(0,0,0,0.25)] transition-colors hover:bg-[rgba(43,43,43,0.95)]"
+            className="absolute -top-2.5 -right-2.5 flex size-6.5 items-center justify-center rounded-full bg-[rgba(43,43,43,0.8)] text-white shadow-[0_4px_11px_0_rgba(0,0,0,0.25)] transition-colors hover:bg-[rgba(43,43,43,0.95)]"
           >
             <X size={13} strokeWidth={2.5} />
           </button>

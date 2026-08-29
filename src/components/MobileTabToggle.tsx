@@ -19,14 +19,14 @@ export default function MobileTabToggle({
   onChange,
 }: MobileTabToggleProps) {
   return (
-    <div className="flex w-full shrink-0 items-center rounded-full bg-[#f6f6f6] p-1 md:hidden">
+    <div className="bg-surface-soft flex w-full shrink-0 items-center rounded-full p-1 md:hidden">
       <button
         onClick={() => onChange("questions")}
         className={clsx(
           "font-heading flex-1 rounded-full py-2.5 text-[15px] leading-none font-semibold tracking-[-0.6px] transition-all duration-200",
           activeTab === "questions"
-            ? "bg-[#303030] text-white shadow-sm"
-            : "text-[rgba(94,94,94,0.8)] hover:text-[#303030]"
+            ? "bg-body text-white shadow-sm"
+            : "hover:text-body text-[rgba(94,94,94,0.8)]"
         )}
       >
         Questions
@@ -36,8 +36,8 @@ export default function MobileTabToggle({
         className={clsx(
           "font-heading flex-1 rounded-full py-2.5 text-[15px] leading-none font-semibold tracking-[-0.6px] transition-all duration-200",
           activeTab === "answers"
-            ? "bg-[#303030] text-white shadow-sm"
-            : "text-[rgba(94,94,94,0.8)] hover:text-[#303030]"
+            ? "bg-body text-white shadow-sm"
+            : "hover:text-body text-[rgba(94,94,94,0.8)]"
         )}
       >
         Answer Sheet

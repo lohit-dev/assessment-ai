@@ -53,10 +53,10 @@ export default function TopBar() {
           {/* Bell with notification dot */}
           <button
             aria-label="Notifications"
-            className="relative flex size-9 items-center justify-center rounded-full bg-[#f6f6f6] transition-colors hover:brightness-95"
+            className="bg-surface-soft relative flex size-9 items-center justify-center rounded-full transition-colors hover:brightness-95"
           >
-            <Bell size={18} strokeWidth={1.75} className="text-[#303030]" />
-            <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-[#ff5623] ring-[1.5px] ring-white" />
+            <Bell size={18} strokeWidth={1.75} className="text-body" />
+            <span className="bg-accent absolute top-1.5 right-1.5 size-2 rounded-full ring-[1.5px] ring-white" />
           </button>
 
           {/* User avatar */}
@@ -74,7 +74,7 @@ export default function TopBar() {
           <button
             aria-label="Open menu"
             onClick={() => setDrawerOpen(true)}
-            className="text-[#303030]"
+            className="text-body"
           >
             <Menu size={22} strokeWidth={1.75} />
           </button>
@@ -92,12 +92,12 @@ export default function TopBar() {
           <button
             aria-label="Back"
             onClick={() => router.back()}
-            className="flex size-7 items-center justify-center rounded-md text-[#303030] transition-colors hover:bg-gray-100"
+            className="text-body flex size-7 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
           >
             <ArrowLeft size={17} strokeWidth={2.25} />
           </button>
 
-          <div className="flex items-center gap-1.5 text-[#a9a9a9]">
+          <div className="text-disabled flex items-center gap-1.5">
             {/* Clipboard / exams icon */}
             <svg
               width="16"
@@ -122,7 +122,7 @@ export default function TopBar() {
                 strokeLinecap="round"
               />
             </svg>
-            <span className="font-heading text-base font-semibold tracking-[-0.64px] text-[#a9a9a9]">
+            <span className="font-heading text-disabled text-base font-semibold tracking-[-0.64px]">
               Exams
             </span>
           </div>
@@ -133,9 +133,9 @@ export default function TopBar() {
           {/* Help / ? button */}
           <button
             aria-label="Help"
-            className="flex size-9 items-center justify-center rounded-full bg-[#f6f6f6] transition-colors hover:brightness-95"
+            className="bg-surface-soft flex size-9 items-center justify-center rounded-full transition-colors hover:brightness-95"
           >
-            <span className="flex size-6 items-center justify-center rounded-full border-2 border-[#303030] text-[16px] leading-none font-bold tracking-[-0.64px] text-[#303030]">
+            <span className="border-body text-body flex size-6 items-center justify-center rounded-full border-2 text-[16px] leading-none font-bold tracking-[-0.64px]">
               ?
             </span>
           </button>
@@ -143,18 +143,18 @@ export default function TopBar() {
           {/* Bell with notification dot */}
           <button
             aria-label="Notifications"
-            className="relative flex size-9 items-center justify-center rounded-full bg-[#f6f6f6] transition-colors hover:brightness-95"
+            className="bg-surface-soft relative flex size-9 items-center justify-center rounded-full transition-colors hover:brightness-95"
           >
-            <Bell size={17} strokeWidth={1.75} className="text-[#303030]" />
-            <span className="absolute top-[7px] right-[7px] size-[7px] rounded-full bg-[#ff5623] outline-[1.5px] outline-white" />
+            <Bell size={17} strokeWidth={1.75} className="text-body" />
+            <span className="bg-accent absolute top-1.75 right-1.75 size-1.75 rounded-full outline-[1.5px] outline-white" />
           </button>
 
           {/* Sparkles / AI features */}
           <button
             aria-label="AI features"
-            className="flex size-9 items-center justify-center rounded-full bg-[#f6f6f6] transition-colors hover:brightness-95"
+            className="bg-surface-soft flex size-9 items-center justify-center rounded-full transition-colors hover:brightness-95"
           >
-            <Sparkles size={17} strokeWidth={1.75} className="text-[#303030]" />
+            <Sparkles size={17} strokeWidth={1.75} className="text-body" />
           </button>
 
           {/* Divider */}
@@ -171,10 +171,10 @@ export default function TopBar() {
                 className="object-cover"
               />
             </div>
-            <span className="font-heading text-base font-semibold tracking-[-0.64px] text-[#303030]">
+            <span className="font-heading text-body text-base font-semibold tracking-[-0.64px]">
               Madhur Rastogi
             </span>
-            <ChevronDown size={14} className="text-[#303030]" />
+            <ChevronDown size={14} className="text-body" />
           </button>
         </div>
       </header>
