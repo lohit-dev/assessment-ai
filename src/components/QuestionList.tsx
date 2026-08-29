@@ -52,23 +52,26 @@ export default function QuestionList({
   }
 
   return (
-    <div className="flex h-full min-h-0 w-full flex-1 flex-col gap-4 overflow-hidden rounded-[20px] bg-white/50 p-4 md:max-w-[672px] md:flex-none">
+    /* Outer container: half-white backdrop, rounded, flex column */
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col gap-3 overflow-hidden rounded-[20px] bg-white/50 p-4 md:max-w-[672px] md:flex-none">
+      {/* Header row */}
       <div className="flex w-full shrink-0 items-center justify-between gap-2">
-        <p className="font-heading text-body text-[14px] font-bold tracking-[-0.56px] md:text-[16px] md:tracking-[-0.64px]">
-          <span className="md:hidden">Extracted Questions</span>
-          <span className="hidden md:inline">
-            Extracted Questions (from question paper)
+        <p className="font-heading text-[14px] leading-[1.4] font-bold tracking-[-0.56px] text-[#303030] md:text-[16px] md:tracking-[-0.64px]">
+          Extracted Questions{" "}
+          <span className="hidden text-[#303030] md:inline">
+            (from question paper)
           </span>
         </p>
         <button
           onClick={handleExpandAll}
-          className="font-heading shrink-0 rounded-full bg-white px-3 py-2 text-[13px] font-medium tracking-[-0.56px] text-[#181818] transition-colors hover:bg-gray-50 md:px-5 md:py-3 md:text-[14px]"
+          className="font-heading shrink-0 rounded-full bg-white px-3 py-1.5 text-[13px] font-medium tracking-[-0.52px] text-[#181818] shadow-sm transition-colors hover:bg-gray-50 md:px-5 md:py-2.5 md:text-[14px] md:tracking-[-0.56px]"
         >
           {allExpanded ? "Collapse All" : "Expand All"}
         </button>
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1">
+      {/* Scrollable question list */}
+      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-0.5">
         {mapped.map((m) => (
           <QuestionItem
             key={m.question.questionId}

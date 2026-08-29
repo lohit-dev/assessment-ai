@@ -25,7 +25,7 @@ export default function AnswerSheetViewer({
 
   const totalPages = pages.length;
 
-  // Jump to the first matched page whenever the selected question changes.
+  // Jump to the first matched page whenever the selected question changes
   useEffect(() => {
     if (selectedRegions.length === 0) return;
     const targetPage = selectedRegions[0].page;
@@ -38,17 +38,22 @@ export default function AnswerSheetViewer({
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  /** Short label like "Q2" rendered above highlighted regions */
   const shortLabel = selectedQuestion
     ? `Q${selectedQuestion.displayNumber.replace(/^q\.?\s*/i, "").replace(/\s+/g, "")}`
     : "";
 
   return (
-    <div className="border-hairline/60 flex h-full min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-[20px] border-[1.25px] bg-white">
-      <div className="bg-body flex h-14 w-full shrink-0 items-center justify-between gap-2 px-3 py-2 md:h-16 md:px-6 md:py-3">
+    /* Outer card: white bg, rounded, flex column, fills remaining width */
+    <div className="flex h-full min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-[20px] border-[1.25px] border-[#cecece]/60 bg-white">
+      {/* ── Header bar (dark #303030 background) ── */}
+      <div className="flex h-14 w-full shrink-0 items-center justify-between gap-2 bg-[#303030] px-4 py-3 md:h-16 md:px-6">
         <p className="font-heading shrink-0 text-[14px] font-bold tracking-[-0.56px] text-white/80 md:text-[16px] md:tracking-[-0.64px]">
           Answer Sheet
         </p>
-        <div className="flex items-center gap-1.5 md:gap-3">
+
+        <div className="flex items-center gap-2 md:gap-3">
+          {/* Zoom controls */}
           <div className="flex items-center justify-center gap-1.5 rounded-lg bg-white/10 px-2 py-1.5 md:gap-2 md:px-3 md:py-2">
             <button
               aria-label="Zoom out"
@@ -57,7 +62,7 @@ export default function AnswerSheetViewer({
             >
               <Minus size={16} />
             </button>
-            <span className="font-heading w-8 text-center text-[13px] font-bold tracking-[-0.56px] text-white md:w-9 md:text-[14px]">
+            <span className="font-heading w-8 text-center text-[13px] font-bold tracking-[-0.52px] text-white md:w-10 md:text-[14px]">
               {zoom}%
             </span>
             <button
@@ -69,6 +74,7 @@ export default function AnswerSheetViewer({
             </button>
           </div>
 
+          {/* Page navigation */}
           <div className="flex items-center justify-center gap-1.5 rounded-lg bg-white/10 px-2 py-1.5 md:gap-2 md:px-3 md:py-2">
             <button
               aria-label="Previous page"
@@ -78,7 +84,7 @@ export default function AnswerSheetViewer({
             >
               <ChevronLeft size={16} />
             </button>
-            <span className="font-heading text-[13px] font-bold tracking-[-0.56px] text-white md:text-[14px]">
+            <span className="font-heading text-[13px] font-bold tracking-[-0.52px] whitespace-nowrap text-white md:text-[14px]">
               <span className="md:hidden">
                 {visiblePage}/{totalPages || 1}
               </span>
@@ -100,11 +106,11 @@ export default function AnswerSheetViewer({
         </div>
       </div>
 
+      {/* ── Scrollable page area ── */}
       <div
         ref={containerRef}
         className="flex flex-1 flex-col items-center gap-2.5 overflow-y-auto bg-[#e5e5e5] p-2.5"
         onScroll={() => {
-          // report the page nearest the top of the viewport as "visible"
           const container = containerRef.current;
           if (!container) return;
           let closest = 1;
@@ -150,6 +156,8 @@ export default function AnswerSheetViewer({
                   className="block w-full"
                   draggable={false}
                 />
+
+                {/* Green highlighted region overlays */}
                 {regionsOnThisPage.map((region) => (
                   <div
                     key={region.regionId}
@@ -161,6 +169,7 @@ export default function AnswerSheetViewer({
                       height: `${region.boundingBox.height * 100}%`,
                     }}
                   >
+                    {/* Question label tab above the box */}
                     <span className="absolute -top-[26px] left-3 rounded-t-xl bg-[#34ac15] px-3 py-1 text-[14px] font-bold tracking-[-0.56px] text-white">
                       {shortLabel}
                     </span>

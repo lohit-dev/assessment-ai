@@ -7,6 +7,7 @@ import TopBar from "@/components/TopBar";
 import LoadingState from "@/components/LoadingState";
 import QuestionList from "@/components/QuestionList";
 import AnswerSheetViewer from "@/components/AnswerSheetViewer";
+import MobileTabToggle, { type MobileTab } from "@/components/MobileTabToggle";
 import { useAssessmentStore } from "@/store/useAssessmentStore";
 import { renderPdfPages, type RenderedPage } from "@/lib/renderPdfPages";
 import type {
@@ -19,10 +20,7 @@ import type {
 
 const STAGE_COPY: Partial<Record<string, { title: string; subtitle: string }>> =
   {
-    uploading: {
-      title: "Uploading...",
-      subtitle: "Preparing your files",
-    },
+    uploading: { title: "Uploading...", subtitle: "Preparing your files" },
     "extracting-questions": {
       title: "Extracting...",
       subtitle: "Reading the question paper",
@@ -119,25 +117,24 @@ export default function ResultsPage() {
   const [renderedPages, setRenderedPages] = useState<RenderedPage[]>([]);
   const [pagesLoading, setPagesLoading] = useState(true);
   const [gradingIds, setGradingIds] = useState<Set<string>>(new Set());
+  const [mobileTab, setMobileTab] = useState<MobileTab>("questions");
 
-  // ---- Stage 1 & 2: extraction pipeline ----
+  // ── Phase 1 & 2: extraction pipeline ──────────────────────────────────────
   useEffect(() => {
     if (hasRun.current) return;
-
     if (!questionPaperFile || !answerSheetFile) {
       router.replace("/");
       return;
     }
-
     hasRun.current = true;
 
     async function run() {
       try {
         setError(null);
         setStage("extracting-questions");
-        const { questions: extractedQuestions, pages: qPages } =
+        const { questions: extractedQs, pages: qPages } =
           await extractQuestions(questionPaperFile!);
-        setQuestions(extractedQuestions);
+        setQuestions(extractedQs);
         setQuestionPaperPages(qPages);
 
         setStage("extracting-answers");
@@ -145,7 +142,7 @@ export default function ResultsPage() {
           regions,
           mapped: mappedResult,
           pages: aPages,
-        } = await extractAnswers(answerSheetFile!, extractedQuestions);
+        } = await extractAnswers(answerSheetFile!, extractedQs);
         setAnswerRegions(regions);
         setMapped(mappedResult);
         setAnswerSheetPages(aPages);
@@ -155,12 +152,11 @@ export default function ResultsPage() {
         setError(err instanceof Error ? err.message : "Something went wrong.");
       }
     }
-
     run();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [retryKey, questionPaperFile, answerSheetFile]);
 
-  // ---- Render answer sheet pages client-side for the viewer ----
+  // ── Client-side PDF rendering ──────────────────────────────────────────────
   useEffect(() => {
     if (stage !== "done" || !answerSheetFile) return;
     let cancelled = false;
@@ -179,7 +175,7 @@ export default function ResultsPage() {
     };
   }, [stage, answerSheetFile]);
 
-  // ---- Background grading: every matched/unanswered question, in parallel ----
+  // ── Background grading: parallel, incremental ──────────────────────────────
   useEffect(() => {
     if (stage !== "done" || hasGraded.current || mapped.length === 0) return;
     hasGraded.current = true;
@@ -190,9 +186,7 @@ export default function ResultsPage() {
     gradable.forEach((m) => {
       gradeOne(m.question, m.regions, answerSheetPages)
         .then((result) => setGrade(m.question.questionId, result))
-        .catch(() => {
-          // leave ungraded on failure; pill just won't show for this one
-        })
+        .catch(() => {})
         .finally(() => {
           setGradingIds((prev) => {
             const next = new Set(prev);
@@ -204,7 +198,7 @@ export default function ResultsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage, mapped]);
 
-  // ---- Default-select the first matched question once results land ----
+  // ── Default-select first matched question ─────────────────────────────────
   useEffect(() => {
     if (stage !== "done" || selectedQuestionId) return;
     const first = mapped.find((m) => m.status === "matched");
@@ -237,39 +231,44 @@ export default function ResultsPage() {
 
   return (
     <div className="flex min-h-screen bg-linear-to-b from-[#eeeeee] to-[#dadada] p-3 md:p-4">
+      {/* Desktop sidebar */}
       <Sidebar
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
       />
 
+      {/* Main content area – shifts right to make room for the sidebar on desktop */}
       <div
         className={
           sidebarCollapsed
-            ? "flex flex-1 flex-col gap-3 transition-[margin] md:ml-[88px]"
-            : "flex flex-1 flex-col gap-3 transition-[margin] md:ml-82"
+            ? "flex flex-1 flex-col gap-3 transition-[margin] duration-200 md:ml-[88px]"
+            : "flex flex-1 flex-col gap-3 transition-[margin] duration-200 md:ml-82"
         }
       >
         <TopBar />
 
         <main className="flex flex-1 flex-col">
+          {/* ── Error state ───────────────────────────────────────────── */}
           {stage === "error" ? (
             <div className="animate-fade-in-up flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
-              <p className="font-heading text-heading text-xl font-bold">
+              <p className="font-heading text-xl font-bold text-[#2b2b2b]">
                 Something went wrong
               </p>
               <p className="max-w-md text-sm text-gray-500">{error}</p>
               <button
                 onClick={handleRetry}
-                className="font-heading bg-body mt-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="font-heading mt-2 rounded-full bg-[#303030] px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
               >
                 Try again
               </button>
             </div>
-          ) : isLoading ? (
+          ) : /* ── Loading state ────────────────────────────────────────── */
+          isLoading ? (
             <LoadingState title={copy.title} subtitle={copy.subtitle} />
-          ) : mapped.length === 0 ? (
+          ) : /* ── Empty state ──────────────────────────────────────────── */
+          mapped.length === 0 ? (
             <div className="animate-fade-in-up flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
-              <p className="font-heading text-heading text-xl font-bold">
+              <p className="font-heading text-xl font-bold text-[#2b2b2b]">
                 No questions found
               </p>
               <p className="max-w-md text-sm text-gray-500">
@@ -278,26 +277,68 @@ export default function ResultsPage() {
               </p>
               <button
                 onClick={() => router.push("/")}
-                className="font-heading bg-body mt-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                className="font-heading mt-2 rounded-full bg-[#303030] px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
               >
                 Upload again
               </button>
             </div>
           ) : (
-            <div className="animate-fade-in-up flex h-[calc(100vh-88px)] w-full flex-col gap-3 md:flex-row">
-              <QuestionList
-                mapped={mapped}
-                selectedQuestionId={selectedQuestionId}
-                grades={grades}
-                gradingIds={gradingIds}
-                onSelectQuestion={handleSelectQuestion}
-              />
-              <AnswerSheetViewer
-                pages={renderedPages}
-                isLoadingPages={pagesLoading}
-                selectedQuestion={selectedMapped?.question ?? null}
-                selectedRegions={selectedMapped?.regions ?? []}
-              />
+            /* ── Results: question ↔ answer mapping ───────────────────── */
+            <div className="animate-fade-in flex flex-1 flex-col gap-3">
+              {/*
+               * Mobile tab toggle — "Questions" / "Answer Sheet"
+               * Only visible on small screens; hides on md+
+               */}
+              <MobileTabToggle activeTab={mobileTab} onChange={setMobileTab} />
+
+              {/*
+               * Split layout:
+               *   – Mobile: one panel visible at a time (controlled by mobileTab)
+               *   – Desktop (md+): side-by-side, QuestionList left, AnswerSheetViewer right
+               *
+               * Height: fill available viewport minus top bar (~88px with gap).
+               */}
+              <div
+                className="flex flex-1 gap-3"
+                style={{ minHeight: "calc(100vh - 120px)" }}
+              >
+                {/* Questions panel */}
+                <div
+                  className={
+                    mobileTab === "questions"
+                      ? "flex flex-1 flex-col md:flex md:max-w-[672px] md:flex-none"
+                      : "hidden md:flex md:max-w-[672px] md:flex-none md:flex-col"
+                  }
+                >
+                  <QuestionList
+                    mapped={mapped}
+                    selectedQuestionId={selectedQuestionId}
+                    grades={grades}
+                    gradingIds={gradingIds}
+                    onSelectQuestion={(id) => {
+                      handleSelectQuestion(id);
+                      // On mobile: automatically switch to answer sheet after selecting
+                      setMobileTab("answers");
+                    }}
+                  />
+                </div>
+
+                {/* Answer sheet viewer panel */}
+                <div
+                  className={
+                    mobileTab === "answers"
+                      ? "flex flex-1 flex-col"
+                      : "hidden md:flex md:flex-1 md:flex-col"
+                  }
+                >
+                  <AnswerSheetViewer
+                    pages={renderedPages}
+                    isLoadingPages={pagesLoading}
+                    selectedQuestion={selectedMapped?.question ?? null}
+                    selectedRegions={selectedMapped?.regions ?? []}
+                  />
+                </div>
+              </div>
             </div>
           )}
         </main>

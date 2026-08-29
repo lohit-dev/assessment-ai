@@ -347,7 +347,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
 
         <button
           type="button"
-          className="border-accent-glow relative mx-auto mb-4 flex h-10.5 w-[251px] items-center justify-center gap-2.5 rounded-full border-4 bg-[#272727] px-10.75 font-sans text-base font-medium tracking-[-0.64px] text-white shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
+          className="border-accent-glow relative mx-auto mb-4 flex h-[42px] w-[251px] shrink-0 items-center justify-center gap-2 rounded-full border-4 bg-[#272727] font-sans text-[16px] leading-[28px] font-medium tracking-[-0.64px] whitespace-nowrap text-white shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
         >
           <svg
             width="16"
@@ -355,6 +355,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
             viewBox="0 0 16 16"
             fill="none"
             aria-hidden
+            className="shrink-0"
           >
             <path
               d="M8 1l1.545 4.455L14 7l-4.455 1.545L8 15l-1.545-4.455L2 9l4.455-1.545L8 1z"
