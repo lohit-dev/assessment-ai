@@ -1,5 +1,4 @@
 // Server-only. Never import from client components.
-import * as pdfjs from "pdfjs-dist/legacy/build/pdf.mjs";
 import type { PageImage } from "@/types";
 
 export const PDF_DATA_URL_PREFIX = "data:application/pdf";
@@ -10,6 +9,7 @@ export const PDF_DATA_URL_PREFIX = "data:application/pdf";
  * receive the document as a single inline part — no per-page rendering.
  */
 export async function pdfToImages(buffer: ArrayBuffer): Promise<PageImage[]> {
+  const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
   const data = new Uint8Array(buffer.slice(0));
   const pdf = await pdfjs.getDocument({
     data,

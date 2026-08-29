@@ -14,6 +14,18 @@ import { errorResponse } from "@/lib/http/response";
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
+  try {
+    return await handlePost(req);
+  } catch (error) {
+    console.error("[extract-questions] unhandled error:", error);
+    return errorResponse(
+      500,
+      "The extraction service is temporarily unavailable."
+    );
+  }
+}
+
+async function handlePost(req: NextRequest): Promise<NextResponse> {
   let formData: FormData;
   try {
     formData = await req.formData();
