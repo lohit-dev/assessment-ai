@@ -52,20 +52,23 @@ export default function QuestionList({
   }
 
   return (
-    <div className="flex h-full w-full max-w-[672px] shrink-0 flex-col gap-4 overflow-hidden rounded-[20px] bg-white/50 p-4">
-      <div className="flex w-full items-center justify-between">
-        <p className="font-heading text-body text-[16px] font-bold tracking-[-0.64px]">
-          Extracted Questions (from question paper)
+    <div className="flex h-full min-h-0 w-full flex-1 flex-col gap-4 overflow-hidden rounded-[20px] bg-white/50 p-4 md:max-w-[672px] md:flex-none">
+      <div className="flex w-full shrink-0 items-center justify-between gap-2">
+        <p className="font-heading text-body text-[14px] font-bold tracking-[-0.56px] md:text-[16px] md:tracking-[-0.64px]">
+          <span className="md:hidden">Extracted Questions</span>
+          <span className="hidden md:inline">
+            Extracted Questions (from question paper)
+          </span>
         </p>
         <button
           onClick={handleExpandAll}
-          className="font-heading rounded-full bg-white px-5 py-3 text-[14px] font-medium tracking-[-0.56px] text-[#181818] transition-colors hover:bg-gray-50"
+          className="font-heading shrink-0 rounded-full bg-white px-3 py-2 text-[13px] font-medium tracking-[-0.56px] text-[#181818] transition-colors hover:bg-gray-50 md:px-5 md:py-3 md:text-[14px]"
         >
           {allExpanded ? "Collapse All" : "Expand All"}
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 overflow-y-auto pr-1">
+      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1">
         {mapped.map((m) => (
           <QuestionItem
             key={m.question.questionId}

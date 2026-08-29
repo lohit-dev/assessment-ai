@@ -253,7 +253,7 @@ export default function ResultsPage() {
 
         <main className="flex flex-1 flex-col">
           {stage === "error" ? (
-            <div className="flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
+            <div className="animate-fade-in-up flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
               <p className="font-heading text-heading text-xl font-bold">
                 Something went wrong
               </p>
@@ -268,7 +268,7 @@ export default function ResultsPage() {
           ) : isLoading ? (
             <LoadingState title={copy.title} subtitle={copy.subtitle} />
           ) : mapped.length === 0 ? (
-            <div className="flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
+            <div className="animate-fade-in-up flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
               <p className="font-heading text-heading text-xl font-bold">
                 No questions found
               </p>
@@ -284,7 +284,7 @@ export default function ResultsPage() {
               </button>
             </div>
           ) : (
-            <div className="flex h-[calc(100vh-88px)] w-full gap-3">
+            <div className="animate-fade-in-up flex h-[calc(100vh-88px)] w-full flex-col gap-3 md:flex-row">
               <QuestionList
                 mapped={mapped}
                 selectedQuestionId={selectedQuestionId}

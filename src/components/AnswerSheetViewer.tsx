@@ -43,13 +43,13 @@ export default function AnswerSheetViewer({
     : "";
 
   return (
-    <div className="border-hairline/60 flex h-full flex-1 flex-col overflow-hidden rounded-[20px] border-[1.25px] bg-white">
-      <div className="bg-body flex h-16 w-full shrink-0 items-center justify-between px-6 py-3">
-        <p className="font-heading text-[16px] font-bold tracking-[-0.64px] text-white/80">
+    <div className="border-hairline/60 flex h-full min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden rounded-[20px] border-[1.25px] bg-white">
+      <div className="bg-body flex h-14 w-full shrink-0 items-center justify-between gap-2 px-3 py-2 md:h-16 md:px-6 md:py-3">
+        <p className="font-heading shrink-0 text-[14px] font-bold tracking-[-0.56px] text-white/80 md:text-[16px] md:tracking-[-0.64px]">
           Answer Sheet
         </p>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center gap-2 rounded-lg bg-white/10 px-3 py-2">
+        <div className="flex items-center gap-1.5 md:gap-3">
+          <div className="flex items-center justify-center gap-1.5 rounded-lg bg-white/10 px-2 py-1.5 md:gap-2 md:px-3 md:py-2">
             <button
               aria-label="Zoom out"
               onClick={() => setZoom((z) => Math.max(50, z - 10))}
@@ -57,7 +57,7 @@ export default function AnswerSheetViewer({
             >
               <Minus size={16} />
             </button>
-            <span className="font-heading w-9 text-center text-[14px] font-bold tracking-[-0.56px] text-white">
+            <span className="font-heading w-8 text-center text-[13px] font-bold tracking-[-0.56px] text-white md:w-9 md:text-[14px]">
               {zoom}%
             </span>
             <button
@@ -69,7 +69,7 @@ export default function AnswerSheetViewer({
             </button>
           </div>
 
-          <div className="flex items-center justify-center gap-2 rounded-lg bg-white/10 px-3 py-2">
+          <div className="flex items-center justify-center gap-1.5 rounded-lg bg-white/10 px-2 py-1.5 md:gap-2 md:px-3 md:py-2">
             <button
               aria-label="Previous page"
               onClick={() => scrollToPage(Math.max(1, visiblePage - 1))}
@@ -78,8 +78,13 @@ export default function AnswerSheetViewer({
             >
               <ChevronLeft size={16} />
             </button>
-            <span className="font-heading text-[14px] font-bold tracking-[-0.56px] text-white">
-              Page {visiblePage} of {totalPages || 1}
+            <span className="font-heading text-[13px] font-bold tracking-[-0.56px] text-white md:text-[14px]">
+              <span className="md:hidden">
+                {visiblePage}/{totalPages || 1}
+              </span>
+              <span className="hidden md:inline">
+                Page {visiblePage} of {totalPages || 1}
+              </span>
             </span>
             <button
               aria-label="Next page"

@@ -65,7 +65,7 @@ export default function UploadCard({
       }}
       onClick={() => !file && inputRef.current?.click()}
       className={clsx(
-        "relative flex h-32 w-full flex-1 flex-col items-center justify-center overflow-visible rounded-[20px] border-[1.5px] border-dashed bg-white px-6 py-4 text-center transition-all sm:h-34",
+        "relative flex h-32 w-full flex-1 flex-col items-center justify-center overflow-visible rounded-[20px] border-[1.5px] border-dashed bg-white px-6 py-4 text-center transition-all md:h-[181px]",
         isDragging
           ? "border-accent bg-accent-50 cursor-copy"
           : file
@@ -84,17 +84,17 @@ export default function UploadCard({
       {!file ? (
         <>
           <div className="bg-surface-muted mb-4 flex size-12 items-center justify-center rounded-lg transition-transform hover:scale-105">
-            <Upload size={20} strokeWidth={2} className="text-body" />
+            <Upload size={24} strokeWidth={2} className="text-body" />
           </div>
           <p className="font-heading text-body text-xl leading-snug font-semibold tracking-[-1.2px]">
             Upload <span className="text-accent">{label}</span>
           </p>
-          <p className="mt-0.5 font-sans text-sm font-normal text-[#5E5E5E8C]">
+          <p className="mt-0.5 font-sans text-sm font-normal tracking-[-0.84px] text-[#5E5E5E8C]">
             Max {maxSizeMb}MB
           </p>
         </>
       ) : (
-        <>
+        <div className="relative">
           <div className="bg-surface-soft flex items-center gap-3 rounded-xl py-3 pr-5 pl-3">
             <div className="flex h-10 w-[35px] shrink-0 items-center justify-center rounded-md bg-red-50 text-red-500">
               <FileText size={18} strokeWidth={1.75} />
@@ -124,7 +124,7 @@ export default function UploadCard({
           >
             <X size={14} strokeWidth={2} />
           </button>
-        </>
+        </div>
       )}
 
       {error && <p className="mt-2 text-xs text-red-500">{error}</p>}

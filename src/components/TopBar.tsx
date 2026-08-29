@@ -1,14 +1,15 @@
 "use client";
 
-import {
-  ArrowLeft,
-  HelpCircle,
-  Bell,
-  Sparkles,
-  ChevronDown,
-  Menu,
-} from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft, Bell, Sparkles, ChevronDown, Menu } from "lucide-react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
+
+const MobileNavDrawer = dynamic(() => import("@/components/MobileNavDrawer"), {
+  ssr: false,
+});
 
 function IconBtn({
   children,
@@ -30,21 +31,28 @@ function IconBtn({
 }
 
 export default function TopBar() {
+  const router = useRouter();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   return (
     <header className="flex h-14 shrink-0 items-center justify-between gap-2.5 rounded-2xl bg-white/75 pr-2 pl-6 shadow-[0_1px_3px_rgba(0,0,0,0.07),0_1px_2px_rgba(0,0,0,0.05),0_0_0_1px_rgba(0,0,0,0.03)] backdrop-blur-md">
       <div className="flex items-center gap-3 md:hidden">
         <button
           aria-label="Back"
+          onClick={() => router.back()}
           className="text-body flex size-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
         >
           <ArrowLeft size={19} strokeWidth={2} />
         </button>
-        <span className="font-heading text-body text-lg font-bold">VedaAI</span>
+        <Link href="/" className="font-heading text-body text-lg font-bold">
+          VedaAI
+        </Link>
       </div>
 
       <div className="hidden items-center gap-2.5 md:flex">
         <button
           aria-label="Back"
+          onClick={() => router.back()}
           className="text-body flex size-7 items-center justify-center rounded-md transition-colors hover:bg-gray-100"
         >
           <ArrowLeft size={17} strokeWidth={2.25} />
@@ -94,15 +102,24 @@ export default function TopBar() {
             className="object-cover"
           />
         </div>
-        <button aria-label="Menu" className="text-body">
+        <button
+          aria-label="Open menu"
+          onClick={() => setDrawerOpen(true)}
+          className="text-body"
+        >
           <Menu size={22} strokeWidth={1.75} />
         </button>
       </div>
 
       <div className="hidden items-center gap-2 md:flex">
-        <IconBtn ariaLabel="Help">
-          <HelpCircle size={17} strokeWidth={1.75} className="text-body" />
-        </IconBtn>
+        <button
+          aria-label="Help"
+          className="bg-surface-soft flex size-9 items-center justify-center rounded-full transition-colors hover:brightness-95"
+        >
+          <span className="text-body flex size-6 items-center justify-center rounded-full border-2 border-[#303030] text-[16px] font-bold tracking-[-0.64px]">
+            ?
+          </span>
+        </button>
 
         <IconBtn ariaLabel="Notifications">
           <Bell size={17} strokeWidth={1.75} className="text-body" />
@@ -116,7 +133,7 @@ export default function TopBar() {
         <div className="mx-1 h-5 w-px bg-gray-200" />
 
         <button className="flex items-center gap-2 rounded-full px-1.5 py-1 transition-colors hover:bg-gray-50">
-          <div className="relative size-7.5 overflow-hidden rounded-full">
+          <div className="relative size-8 overflow-hidden rounded-full">
             <Image
               src="/assets/madhur-profile.svg"
               alt="Madhur Rastogi"
@@ -131,6 +148,8 @@ export default function TopBar() {
           <ChevronDown size={14} className="text-body" />
         </button>
       </div>
+
+      <MobileNavDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </header>
   );
 }

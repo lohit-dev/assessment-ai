@@ -29,7 +29,16 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-linear-to-b from-[#F5F5F5] to-[#E9E5E5] p-3 md:p-4">
+    <div className="relative flex min-h-screen overflow-hidden bg-linear-to-b from-[#F5F5F5] to-[#E9E5E5] p-3 md:p-4">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-72 left-1/3 h-[428px] w-[1318px] rounded-full bg-[radial-gradient(closest-side,rgba(255,147,80,0.10),transparent)] blur-3xl"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -bottom-84 left-1/2 h-[428px] w-[1113px] rounded-full bg-[radial-gradient(closest-side,rgba(255,86,35,0.08),transparent)] blur-3xl"
+      />
+
       <Sidebar
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed((c) => !c)}
@@ -65,7 +74,7 @@ export default function UploadPage() {
             </span>
           </h1>
 
-          <p className="font-heading text-body mt-1.5 text-center text-base font-normal">
+          <p className="font-heading text-body mt-1.5 text-center text-[20px] font-normal tracking-[-0.8px]">
             Upload both files to get started
           </p>
 
@@ -80,7 +89,7 @@ export default function UploadPage() {
             />
           </div>
 
-          <div className="flex w-full max-w-2xl flex-col gap-2.5 rounded-3xl border border-white/70 bg-white/50 p-2.5 sm:flex-row">
+          <div className="flex w-full max-w-2xl flex-col gap-4 rounded-3xl bg-white/50 p-3 sm:flex-row">
             <UploadCard
               label="Question Paper"
               file={questionPaperFile}
@@ -96,13 +105,13 @@ export default function UploadPage() {
           <button
             disabled={!bothUploaded}
             onClick={handleStartMapping}
-            className="font-heading bg-body mt-4 flex h-11 items-center justify-center gap-2 rounded-full border-2 border-white/15 py-3 pr-5 pl-6 text-sm font-semibold text-white transition-all enabled:cursor-pointer enabled:shadow-[0_4px_16px_rgba(48,48,48,0.25)] disabled:cursor-not-allowed disabled:opacity-25"
+            className="font-heading bg-body mt-4 flex h-11 items-center justify-center gap-2 rounded-full border-2 border-white/15 py-3 pr-5 pl-6 text-sm font-medium tracking-[-0.56px] text-white transition-all enabled:cursor-pointer enabled:shadow-[0_4px_16px_rgba(48,48,48,0.25)] disabled:cursor-not-allowed disabled:opacity-25"
           >
             Start Mapping
-            <ArrowRight size={16} strokeWidth={2.25} />
+            <ArrowRight size={20} strokeWidth={2} />
           </button>
 
-          <p className="mt-2.5 max-w-85 text-center font-sans text-xs text-[#8E8E8E] md:max-w-none">
+          <p className="font-heading mt-2.5 max-w-85 text-center text-sm tracking-[-0.84px] text-[rgba(94,94,94,0.8)] md:max-w-none">
             Once both files are uploaded, you&apos;ll able to map answers with
             questions
           </p>

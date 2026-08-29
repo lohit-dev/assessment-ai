@@ -52,7 +52,17 @@ Each element must conform exactly to this TypeScript type:
 Rules:
 - Each distinct question attempt is a separate region.
 - If a student answers multiple parts on a single page, create one region per part.
-- Bounding boxes must tightly enclose the written content, not blank margins.
+- CRITICAL — the bounding box must cover the ENTIRE answer, not just its first line:
+  extend the box downward through every line of handwriting that belongs to this
+  answer, stopping only at the line immediately before the next question's label
+  begins, or at the bottom of the visible handwriting on the page if the answer
+  runs to the end. A box that only wraps the first line while later lines of the
+  same answer sit outside it is WRONG and must be avoided.
+- "Tightly enclose" means no wasted blank margin AROUND the full multi-line
+  answer block (left/right/top/bottom edges close to the content) — it does NOT
+  mean cropping the box short vertically once you've included one line. Re-check
+  each region before finalizing: does the box's bottom edge sit below the last
+  line of this answer's handwriting? If not, extend it.
 - Estimate confidence honestly; use < 0.5 when the label is ambiguous or illegible.
 - Output the JSON array and nothing else.`;
 

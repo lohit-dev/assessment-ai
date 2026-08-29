@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Settings, PanelLeft, ChevronsRight } from "lucide-react";
 import clsx from "clsx";
 
@@ -221,7 +222,7 @@ function LibraryIcon({
   );
 }
 
-const navItems = [
+export const navItems = [
   { label: "Home", icon: HomeIcon },
   { label: "My Classroom", icon: ClassroomIcon },
   { label: "Assignments", icon: AssignmentsIcon },
@@ -238,21 +239,23 @@ interface SidebarProps {
 export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
   if (collapsed) {
     return (
-      <aside className="fixed top-[11px] left-[10px] z-40 hidden h-[calc(100vh-22px)] w-16 flex-col items-center justify-between rounded-2xl bg-white px-6 py-3 shadow-[0_32px_48px_0_rgba(0,0,0,0.20),0_16px_48px_0_rgba(0,0,0,0.12)] md:flex">
+      <aside className="fixed top-[11px] left-[10px] z-40 hidden h-[calc(100vh-22px)] w-16 flex-col items-center justify-between rounded-2xl bg-white px-6 py-3 shadow-[0px_16px_24px_0_rgba(0,0,0,0.12),0px_32px_24px_0_rgba(0,0,0,0.2)] md:flex">
         <div className="flex flex-col items-center gap-14">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/veda-ai.svg"
-            alt="VedaAI logo"
-            width={40}
-            height={40}
-            className="shrink-0"
-          />
+          <Link href="/" aria-label="Go to home" className="shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/veda-ai.svg"
+              alt="VedaAI logo"
+              width={40}
+              height={40}
+              className="transition-opacity hover:opacity-80"
+            />
+          </Link>
 
           <button
             type="button"
             aria-label="AI Teacher's Toolkit"
-            className="border-accent-glow relative flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90"
+            className="border-accent-glow relative flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
           >
             <svg
               width="16"
@@ -312,10 +315,14 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
   }
 
   return (
-    <aside className="fixed top-3 left-3 z-40 hidden h-[calc(100vh-24px)] w-76 flex-col justify-between rounded-2xl bg-white p-6 shadow-[0_32px_48px_0_rgba(0,0,0,0.20),0_16px_48px_0_rgba(0,0,0,0.12)] md:flex">
+    <aside className="fixed top-3 left-3 z-40 hidden h-[calc(100vh-24px)] w-76 flex-col justify-between rounded-2xl bg-white p-6 shadow-[0px_16px_24px_0_rgba(0,0,0,0.12),0px_32px_24px_0_rgba(0,0,0,0.2)] md:flex">
       <div>
         <div className="mb-5 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
+          <Link
+            href="/"
+            aria-label="Go to home"
+            className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/assets/veda-ai.svg"
@@ -327,7 +334,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
             <span className="font-heading text-body text-[28px] font-bold tracking-[-1.68px]">
               VedaAI
             </span>
-          </div>
+          </Link>
           <button
             type="button"
             aria-label="Collapse sidebar"
@@ -340,7 +347,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
 
         <button
           type="button"
-          className="border-accent-glow relative mb-4 flex h-10.5 w-full items-center justify-center gap-2.5 rounded-full border-4 bg-[#272727] px-10.75 font-sans text-base font-medium tracking-[-0.64px] text-white shadow-[0_32px_48px_0_rgba(255,255,255,0.20),0_16px_48px_0_rgba(255,255,255,0.12)] transition-opacity hover:opacity-90"
+          className="border-accent-glow relative mx-auto mb-4 flex h-10.5 w-[251px] items-center justify-center gap-2.5 rounded-full border-4 bg-[#272727] px-10.75 font-sans text-base font-medium tracking-[-0.64px] text-white shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
         >
           <svg
             width="16"
@@ -357,7 +364,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
           AI Teacher&apos;s Toolkit
         </button>
 
-        <nav className="flex flex-col gap-1">
+        <nav className="flex flex-col gap-2">
           {navItems.map(({ label, icon: Icon, active }) => (
             <a
               key={label}

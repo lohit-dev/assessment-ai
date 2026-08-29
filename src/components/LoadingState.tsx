@@ -12,7 +12,7 @@ export default function LoadingState({
   subtitle = "This may take a while",
 }: LoadingStateProps) {
   return (
-    <div className="flex h-[calc(100vh-88px)] items-center justify-center rounded-3xl bg-white">
+    <div className="animate-fade-in flex h-[calc(100vh-88px)] items-center justify-center rounded-3xl bg-white">
       <div className="flex flex-col items-center justify-center gap-[15px]">
         <Image
           src="/assets/loader.svg"
@@ -22,7 +22,10 @@ export default function LoadingState({
           className="animate-pulse"
           priority
         />
-        <div className="flex flex-col items-center">
+        <div
+          key={title}
+          className="animate-fade-in-up flex flex-col items-center"
+        >
           <p className="font-heading animate-shimmer-text text-[30px] leading-[36px] font-bold tracking-[-1.2px]">
             {title}
           </p>
