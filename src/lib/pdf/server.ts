@@ -1,4 +1,6 @@
 // Server-only. Never import from client components.
+import "ws";
+
 import type { PageImage } from "@/types";
 
 export const PDF_DATA_URL_PREFIX = "data:application/pdf";
