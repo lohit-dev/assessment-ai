@@ -28,7 +28,7 @@ export default function LoadingState({
           width={128}
           height={135}
           className="animate-pulse"
-          style={{ height: "auto" }}
+          style={{ width: "auto", height: "auto" }}
           priority
         />
 
