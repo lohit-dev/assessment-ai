@@ -1,4 +1,3 @@
-import { GoogleGenAI, type Part, type Content } from "@google/genai";
 import type { PageImage } from "@/types";
 import {
   dataUrlToBase64,
@@ -8,11 +7,9 @@ import {
 
 const VISION_MODEL = "gemini-3.5-flash-lite";
 
-function getClient(): GoogleGenAI {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey)
-    throw new Error("GEMINI_API_KEY environment variable is not set.");
-  return new GoogleGenAI({ apiKey });
+export interface Part {
+  text?: string;
+  inlineData?: { mimeType: string; data: string };
 }
 
 /** Send a prompt + inline parts to Gemini and parse the response as JSON. */
@@ -21,24 +18,36 @@ export async function geminiJSON(
   userText: string,
   parts: Part[]
 ): Promise<unknown> {
-  const client = getClient();
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey)
+    throw new Error("GEMINI_API_KEY environment variable is not set.");
 
-  const contents: Content[] = [
-    { role: "user", parts: [{ text: userText }, ...parts] },
-  ];
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${VISION_MODEL}:generateContent?key=${apiKey}`,
+    {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: systemInstruction }] },
+        contents: [{ role: "user", parts: [{ text: userText }, ...parts] }],
+        generationConfig: {
+          responseMimeType: "application/json",
+          temperature: 0.1,
+          maxOutputTokens: 8192,
+        },
+      }),
+    }
+  );
 
-  const response = await client.models.generateContent({
-    model: VISION_MODEL,
-    contents,
-    config: {
-      systemInstruction,
-      responseMimeType: "application/json",
-      temperature: 0.1,
-      maxOutputTokens: 8192,
-    },
-  });
+  if (!response.ok) {
+    throw new Error(`Gemini request failed (${response.status}).`);
+  }
 
-  const raw = response.text ?? "";
+  const payload = (await response.json()) as {
+    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+  };
+
+  const raw = payload.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
 
   try {
     return JSON.parse(raw);

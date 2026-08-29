@@ -1,4 +1,4 @@
-import type { Part } from "@google/genai";
+import type { Part } from "@/lib/ai/client";
 import { buildImagePartsFromDataUrls, buildPdfPart } from "@/lib/ai/client";
 import { pdfToBase64, pdfToImages } from "@/lib/pdf/server";
 import type { PageImage } from "@/types";
