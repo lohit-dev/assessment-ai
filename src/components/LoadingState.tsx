@@ -23,11 +23,12 @@ export default function LoadingState({
       <div className="flex flex-col items-center justify-center gap-[15px]">
         {/* Animated loader SVG — pulse matches Figma spinning loader */}
         <Image
-          src="/assets/loader.svg"
+          src="/images/ui/loader.svg"
           alt=""
           width={128}
           height={135}
           className="animate-pulse"
+          style={{ height: "auto" }}
           priority
         />
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { Minus, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import type { RenderedPage } from "@/lib/pdf/client";
 import type { AnswerRegion, Question } from "@/types";
@@ -38,7 +39,6 @@ export default function AnswerSheetViewer({
     el?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  /** Short label like "Q2" rendered above highlighted regions */
   const shortLabel = selectedQuestion
     ? `Q${selectedQuestion.displayNumber.replace(/^q\.?\s*/i, "").replace(/\s+/g, "")}`
     : "";
@@ -146,7 +146,7 @@ export default function AnswerSheetViewer({
                   if (el) pageRefs.current.set(p.page, el);
                   else pageRefs.current.delete(p.page);
                 }}
-                className="relative shrink-0 overflow-hidden rounded-2xl shadow-sm"
+                className="relative isolate shrink-0 overflow-hidden rounded-2xl shadow-sm"
                 style={{ width: `${zoom}%`, maxWidth: 660 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -161,16 +161,10 @@ export default function AnswerSheetViewer({
                 {regionsOnThisPage.map((region) => (
                   <div
                     key={region.regionId}
-                    className="absolute rounded-2xl border-2 border-[#3dd218] bg-[rgba(94,255,53,0.1)]"
-                    style={{
-                      left: `${region.boundingBox.x * 100}%`,
-                      top: `${region.boundingBox.y * 100}%`,
-                      width: `${region.boundingBox.width * 100}%`,
-                      height: `${region.boundingBox.height * 100}%`,
-                    }}
+                    className="pointer-events-none absolute z-10 rounded-2xl border-2 border-[#3dd218] bg-[rgba(94,255,53,0.1)]"
+                    style={regionStyle(region)}
                   >
-                    {/* Question label tab above the box */}
-                    <span className="absolute -top-[26px] left-3 rounded-t-xl bg-[#34ac15] px-3 py-1 text-[14px] font-bold tracking-[-0.56px] text-white">
+                    <span className="absolute -top-[28px] left-3 z-20 rounded-t-xl bg-[#34ac15] px-3 py-1 text-[16px] leading-[1.4] font-bold tracking-[-0.64px] text-white">
                       {shortLabel}
                     </span>
                   </div>
@@ -187,4 +181,19 @@ export default function AnswerSheetViewer({
       </div>
     </div>
   );
+}
+
+function regionStyle(region: AnswerRegion): CSSProperties {
+  const { x, y, width, height } = region.boundingBox;
+  return {
+    left: `${clamp(x) * 100}%`,
+    top: `${clamp(y) * 100}%`,
+    width: `${clamp(width, 0.01) * 100}%`,
+    height: `${clamp(height, 0.01) * 100}%`,
+  };
+}
+
+function clamp(value: number, min = 0, max = 1): number {
+  if (!Number.isFinite(value)) return min;
+  return Math.max(min, Math.min(max, value));
 }

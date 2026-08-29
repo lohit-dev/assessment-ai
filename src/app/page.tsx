@@ -79,7 +79,7 @@ export default function UploadPage() {
 
           {/* Tutor illustration */}
           <Image
-            src="/assets/tutor_image.svg"
+            src="/images/illustrations/tutor.svg"
             alt="AI tutor illustration"
             width={110}
             height={110}

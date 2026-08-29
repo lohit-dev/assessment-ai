@@ -122,11 +122,13 @@ function coerceBoundingBox(bb: unknown): {
   return {
     x: typeof b.x === "number" ? clamp(b.x) : defaults.x,
     y: typeof b.y === "number" ? clamp(b.y) : defaults.y,
-    width: typeof b.width === "number" ? clamp(b.width) : defaults.width,
-    height: typeof b.height === "number" ? clamp(b.height) : defaults.height,
+    width: typeof b.width === "number" ? clamp(b.width, 0.01) : defaults.width,
+    height:
+      typeof b.height === "number" ? clamp(b.height, 0.01) : defaults.height,
   };
 }
 
 function clamp(n: number, min = 0, max = 1): number {
+  if (!Number.isFinite(n)) return min;
   return Math.max(min, Math.min(max, n));
 }

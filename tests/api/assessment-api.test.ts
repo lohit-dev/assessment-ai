@@ -6,8 +6,8 @@
  *
  * Exam theme: Science — Light & Optics (Class 10)
  * Fixtures:
- *   tests/fixtures/question-paper.pdf  — 4 questions, 20 marks total
- *   tests/fixtures/answer-sheet.pdf    — Aryan Sharma's answers
+ *   tests/fixtures/documents/question-paper.pdf  — 4 questions, 20 marks total
+ *   tests/fixtures/documents/answer-sheet.pdf    — Aryan Sharma's answers
  *
  * ── Test groups ──────────────────────────────────────────────────────────────
  *  Group A — error-path tests (no API key needed, always run):
@@ -18,7 +18,7 @@
  *    5.  POST /api/grade             — missing question field → 400
  *    6.  POST /api/grade             — empty regions → 200, score 0, no AI call
  *
- *  Group B — happy-path + full flow (require GEMINI_API_KEY, skipped otherwise):
+ *  Group B — happy-path + full flow (require GEMINI_API_KEY):
  *    7.  POST /api/extract-questions — extracts Question[] + PageImage[]
  *    8.  POST /api/extract-answers   — extracts AnswerRegion[] + MappedQuestion[]
  *    9.  POST /api/grade             — grades one matched question
@@ -40,30 +40,22 @@ import type {
 // ─── Config ───────────────────────────────────────────────────────────────────
 
 const BASE_URL = "http://127.0.0.1:3100";
-const FIXTURES = path.join(__dirname, "fixtures");
+const FIXTURES = path.join(__dirname, "..", "fixtures", "documents");
 
-function hasApiKey(): boolean {
+function requireApiKey(): void {
   const key = process.env.GEMINI_API_KEY;
-  return (
-    process.env.RUN_AI_TESTS === "true" &&
-    Boolean(key) &&
-    key !== "your_gemini_api_key_here"
-  );
-}
-
-function aiTest(name: string, fn: () => Promise<void>, timeout?: number): void {
-  if (hasApiKey()) {
-    test(name, fn, timeout);
-  } else {
-    test.skip(name, fn, timeout);
+  if (!key || key === "your_gemini_api_key_here") {
+    throw new Error(
+      "GEMINI_API_KEY must be set in .env.local for the full integration suite."
+    );
   }
 }
 
 /**
- * 15 seconds between AI calls — keeps us under the free-tier RPM cap.
+ * A short pause between AI calls avoids burst-rate limiting in local runs.
  * Error-path tests use wait(1000) since they don't hit Gemini.
  */
-const wait = (ms = 15_000) => new Promise((r) => setTimeout(r, ms));
+const wait = (ms = 3_000) => new Promise((r) => setTimeout(r, ms));
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -241,8 +233,6 @@ describe("POST /api/grade — error paths", () => {
 });
 
 // ─── Group B: AI happy-path tests ─────────────────────────────────────────────
-// Single describe block with one shared beforeAll for all AI tests.
-// Tests 7–11 are skipped when no key is present.
 
 describe("AI happy-path tests (requires GEMINI_API_KEY)", () => {
   // Shared data populated by beforeAll
@@ -253,7 +243,7 @@ describe("AI happy-path tests (requires GEMINI_API_KEY)", () => {
   let answerPages: PageImage[] = [];
 
   beforeAll(async () => {
-    if (!hasApiKey()) return;
+    requireApiKey();
 
     // ── Step 1: extract questions ─────────────────────────────────────────
     const qRes = await postForm("/api/extract-questions", questionPaperForm());
@@ -290,82 +280,74 @@ describe("AI happy-path tests (requires GEMINI_API_KEY)", () => {
 
   // ── Test 7 ─────────────────────────────────────────────────────────────
 
-  aiTest(
-    "7. extract-questions: returns Question[] and PageImage[]",
-    async () => {
-      expect(questions.length).toBeGreaterThan(0);
-      expect(questionPages.length).toBeGreaterThan(0);
+  test("7. extract-questions: returns Question[] and PageImage[]", async () => {
+    expect(questions.length).toBeGreaterThan(0);
+    expect(questionPages.length).toBeGreaterThan(0);
 
-      for (const q of questions) {
-        expect(typeof q.questionId).toBe("string");
-        expect(q.questionId.length).toBeGreaterThan(0);
-        expect(typeof q.displayNumber).toBe("string");
-        expect(typeof q.text).toBe("string");
-        expect(q.text.length).toBeGreaterThan(0);
-        expect(q.marks === null || typeof q.marks === "number").toBe(true);
-        expect(typeof q.page).toBe("number");
-        expect(q.page).toBeGreaterThanOrEqual(1);
-      }
-
-      for (const p of questionPages) {
-        expect(typeof p.page).toBe("number");
-        expect(typeof p.url).toBe("string");
-        expect(p.url.length).toBeGreaterThan(0);
-      }
-
-      // The exam is about Light & Optics
-      const allText = questions
-        .map((q) => q.text)
-        .join(" ")
-        .toLowerCase();
-      expect(allText).toMatch(/light|refract|mirror|speed|optic/i);
+    for (const q of questions) {
+      expect(typeof q.questionId).toBe("string");
+      expect(q.questionId.length).toBeGreaterThan(0);
+      expect(typeof q.displayNumber).toBe("string");
+      expect(typeof q.text).toBe("string");
+      expect(q.text.length).toBeGreaterThan(0);
+      expect(q.marks === null || typeof q.marks === "number").toBe(true);
+      expect(typeof q.page).toBe("number");
+      expect(q.page).toBeGreaterThanOrEqual(1);
     }
-  );
+
+    for (const p of questionPages) {
+      expect(typeof p.page).toBe("number");
+      expect(typeof p.url).toBe("string");
+      expect(p.url.length).toBeGreaterThan(0);
+    }
+
+    // The exam is about Light & Optics
+    const allText = questions
+      .map((q) => q.text)
+      .join(" ")
+      .toLowerCase();
+    expect(allText).toMatch(/light|refract|mirror|speed|optic/i);
+  });
 
   // ── Test 8 ─────────────────────────────────────────────────────────────
 
-  aiTest(
-    "8. extract-answers: returns AnswerRegion[], MappedQuestion[], PageImage[]",
-    async () => {
-      expect(regions.length).toBeGreaterThan(0);
-      expect(mapped.length).toBeGreaterThanOrEqual(questions.length);
-      expect(answerPages.length).toBeGreaterThan(0);
+  test("8. extract-answers: returns AnswerRegion[], MappedQuestion[], PageImage[]", async () => {
+    expect(regions.length).toBeGreaterThan(0);
+    expect(mapped.length).toBeGreaterThanOrEqual(questions.length);
+    expect(answerPages.length).toBeGreaterThan(0);
 
-      for (const r of regions) {
-        expect(typeof r.regionId).toBe("string");
-        expect(typeof r.questionLabel).toBe("string");
-        expect(
-          r.normalizedId === null || typeof r.normalizedId === "string"
-        ).toBe(true);
-        expect(r.boundingBox.x).toBeGreaterThanOrEqual(0);
-        expect(r.boundingBox.x).toBeLessThanOrEqual(1);
-        expect(r.boundingBox.y).toBeGreaterThanOrEqual(0);
-        expect(r.boundingBox.y).toBeLessThanOrEqual(1);
-        expect(r.boundingBox.width).toBeGreaterThan(0);
-        expect(r.boundingBox.width).toBeLessThanOrEqual(1);
-        expect(r.boundingBox.height).toBeGreaterThan(0);
-        expect(r.boundingBox.height).toBeLessThanOrEqual(1);
-        expect(r.page).toBeGreaterThanOrEqual(1);
-        expect(r.confidence).toBeGreaterThanOrEqual(0);
-        expect(r.confidence).toBeLessThanOrEqual(1);
-      }
-
-      for (const m of mapped) {
-        expect(typeof m.question.questionId).toBe("string");
-        expect(["matched", "unanswered", "unmatched-answer"]).toContain(
-          m.status
-        );
-        expect(Array.isArray(m.regions)).toBe(true);
-      }
-
-      // Answer sheet has real answers — at least one must be matched
-      expect(mapped.some((m) => m.status === "matched")).toBe(true);
+    for (const r of regions) {
+      expect(typeof r.regionId).toBe("string");
+      expect(typeof r.questionLabel).toBe("string");
+      expect(
+        r.normalizedId === null || typeof r.normalizedId === "string"
+      ).toBe(true);
+      expect(r.boundingBox.x).toBeGreaterThanOrEqual(0);
+      expect(r.boundingBox.x).toBeLessThanOrEqual(1);
+      expect(r.boundingBox.y).toBeGreaterThanOrEqual(0);
+      expect(r.boundingBox.y).toBeLessThanOrEqual(1);
+      expect(r.boundingBox.width).toBeGreaterThan(0);
+      expect(r.boundingBox.width).toBeLessThanOrEqual(1);
+      expect(r.boundingBox.height).toBeGreaterThan(0);
+      expect(r.boundingBox.height).toBeLessThanOrEqual(1);
+      expect(r.page).toBeGreaterThanOrEqual(1);
+      expect(r.confidence).toBeGreaterThanOrEqual(0);
+      expect(r.confidence).toBeLessThanOrEqual(1);
     }
-  );
+
+    for (const m of mapped) {
+      expect(typeof m.question.questionId).toBe("string");
+      expect(["matched", "unanswered", "unmatched-answer"]).toContain(m.status);
+      expect(Array.isArray(m.regions)).toBe(true);
+    }
+
+    // Answer sheet has real answers — at least one must be matched
+    expect(mapped.some((m) => m.status === "matched")).toBe(true);
+  });
 
   // ── Test 9 ─────────────────────────────────────────────────────────────
 
-  aiTest("9. grade: matched question returns valid GradeResult", async () => {
+  test("9. grade: matched question returns valid GradeResult", async () => {
     const matchedEntry = mapped.find((m) => m.status === "matched");
     expect(matchedEntry).toBeDefined();
 
@@ -389,7 +371,7 @@ describe("AI happy-path tests (requires GEMINI_API_KEY)", () => {
 
   // ── Test 10 ────────────────────────────────────────────────────────────
 
-  aiTest("10. grade: allGrades triggers ExamSummary in response", async () => {
+  test("10. grade: allGrades triggers ExamSummary in response", async () => {
     const matchedEntry = mapped.find((m) => m.status === "matched");
     expect(matchedEntry).toBeDefined();
 
@@ -428,70 +410,66 @@ describe("AI happy-path tests (requires GEMINI_API_KEY)", () => {
 
   // ── Test 11: Full flow ──────────────────────────────────────────────────
 
-  aiTest(
-    "11. full flow: extract → match → grade all → summary",
-    async () => {
-      // Steps 1 & 2 already done in beforeAll — verify the shared data
-      expect(questions.length).toBeGreaterThan(0);
-      expect(regions.length).toBeGreaterThan(0);
-      expect(mapped.some((m) => m.status === "matched")).toBe(true);
+  test("11. full flow: extract → match → grade all → summary", async () => {
+    // Steps 1 & 2 already done in beforeAll — verify the shared data
+    expect(questions.length).toBeGreaterThan(0);
+    expect(regions.length).toBeGreaterThan(0);
+    expect(mapped.some((m) => m.status === "matched")).toBe(true);
 
-      // Grade every matched/unanswered question sequentially
-      const toGrade = mapped.filter(
-        (m) => m.status === "matched" || m.status === "unanswered"
-      );
-      expect(toGrade.length).toBeGreaterThan(0);
+    // Grade every matched/unanswered question sequentially
+    const toGrade = mapped.filter(
+      (m) => m.status === "matched" || m.status === "unanswered"
+    );
+    expect(toGrade.length).toBeGreaterThan(0);
 
-      const grades: GradeResult[] = [];
+    const grades: GradeResult[] = [];
 
-      for (const entry of toGrade) {
-        const isLast = entry === toGrade[toGrade.length - 1];
+    for (const entry of toGrade) {
+      const isLast = entry === toGrade[toGrade.length - 1];
 
-        const gradeRes = await postJSON("/api/grade", {
-          question: entry.question,
-          regions: entry.regions,
-          pages: answerPages,
-          ...(isLast && grades.length > 0 ? { allGrades: grades } : {}),
-        });
+      const gradeRes = await postJSON("/api/grade", {
+        question: entry.question,
+        regions: entry.regions,
+        pages: answerPages,
+        ...(isLast && grades.length > 0 ? { allGrades: grades } : {}),
+      });
 
-        expect(gradeRes.status).toBe(200);
+      expect(gradeRes.status).toBe(200);
 
-        const result = gradeRes.body.result as GradeResult;
-        expect(typeof result.questionId).toBe("string");
-        expect(["partial", true, false]).toContain(result.isCorrect);
-        expect(result.score).toBeGreaterThanOrEqual(0);
-        expect(result.score).toBeLessThanOrEqual(result.maxScore);
-        expect(typeof result.feedback).toBe("string");
+      const result = gradeRes.body.result as GradeResult;
+      expect(typeof result.questionId).toBe("string");
+      expect(["partial", true, false]).toContain(result.isCorrect);
+      expect(result.score).toBeGreaterThanOrEqual(0);
+      expect(result.score).toBeLessThanOrEqual(result.maxScore);
+      expect(typeof result.feedback).toBe("string");
 
-        grades.push(result);
+      grades.push(result);
 
-        if (isLast && grades.length > 1) {
-          const summary = gradeRes.body.summary as ExamSummary | undefined;
-          if (summary) {
-            expect(typeof summary.totalScore).toBe("number");
-            expect(typeof summary.maxScore).toBe("number");
-            expect(summary.totalScore).toBeLessThanOrEqual(summary.maxScore);
-            expect(typeof summary.overallFeedback).toBe("string");
-          }
+      if (isLast && grades.length > 1) {
+        const summary = gradeRes.body.summary as ExamSummary | undefined;
+        if (summary) {
+          expect(typeof summary.totalScore).toBe("number");
+          expect(typeof summary.maxScore).toBe("number");
+          expect(summary.totalScore).toBeLessThanOrEqual(summary.maxScore);
+          expect(typeof summary.overallFeedback).toBe("string");
         }
-
-        if (!isLast) await wait();
       }
 
-      expect(grades.length).toBe(toGrade.length);
+      if (!isLast) await wait();
+    }
 
-      const totalScore = grades.reduce((s, g) => s + g.score, 0);
-      const maxScore = grades.reduce((s, g) => s + g.maxScore, 0);
-      expect(totalScore).toBeGreaterThanOrEqual(0);
-      expect(maxScore).toBeGreaterThan(0);
-      expect(totalScore).toBeLessThanOrEqual(maxScore);
+    expect(grades.length).toBe(toGrade.length);
 
-      // Aryan answered all questions — at least some should be positive
-      const hasPositive = grades.some(
-        (g) => g.isCorrect === true || g.isCorrect === "partial"
-      );
-      expect(hasPositive).toBe(true);
-    },
-    300_000 // 5 min — free tier RPM means grading N questions takes time
-  );
+    const totalScore = grades.reduce((s, g) => s + g.score, 0);
+    const maxScore = grades.reduce((s, g) => s + g.maxScore, 0);
+    expect(totalScore).toBeGreaterThanOrEqual(0);
+    expect(maxScore).toBeGreaterThan(0);
+    expect(totalScore).toBeLessThanOrEqual(maxScore);
+
+    // Aryan answered all questions — at least some should be positive
+    const hasPositive = grades.some(
+      (g) => g.isCorrect === true || g.isCorrect === "partial"
+    );
+    expect(hasPositive).toBe(true);
+  }, 300_000); // Allow time for multiple remote grading requests.
 });

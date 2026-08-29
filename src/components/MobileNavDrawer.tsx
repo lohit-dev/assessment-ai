@@ -59,7 +59,7 @@ export default function MobileNavDrawer({
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/assets/veda-ai.svg"
+                src="/images/brand/veda-ai.svg"
                 alt="VedaAI logo"
                 width={32}
                 height={32}
@@ -132,7 +132,7 @@ export default function MobileNavDrawer({
             <div className="relative size-10 shrink-0 overflow-hidden rounded-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/assets/delhi_public_school.svg"
+                src="/images/brand/delhi-public-school.svg"
                 alt="Delhi Public School logo"
                 className="size-full object-cover"
               />

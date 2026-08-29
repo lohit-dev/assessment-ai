@@ -28,7 +28,7 @@ export default function TopBar() {
           <button
             aria-label="Back"
             onClick={() => router.back()}
-            className="flex size-8 items-center justify-center rounded-full text-[#303030] transition-colors hover:bg-gray-100"
+            className="text-body flex size-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
           >
             <ArrowLeft size={20} strokeWidth={2} />
           </button>
@@ -36,13 +36,13 @@ export default function TopBar() {
             {/* VedaAI icon SVG */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/assets/veda-ai.svg"
+              src="/images/brand/veda-ai.svg"
               alt="VedaAI logo"
               width={28}
               height={28}
               className="shrink-0"
             />
-            <span className="font-heading text-[20px] leading-[1.4] font-bold tracking-[-0.06em] text-[#303030]">
+            <span className="font-heading text-body text-[20px] leading-[1.4] font-bold tracking-[-0.06em]">
               VedaAI
             </span>
           </Link>
@@ -62,7 +62,7 @@ export default function TopBar() {
           {/* User avatar */}
           <div className="relative size-8 overflow-hidden rounded-full">
             <Image
-              src="/assets/madhur-profile.svg"
+              src="/images/avatars/madhur-profile.svg"
               alt="User avatar"
               fill
               sizes="32px"
@@ -164,7 +164,7 @@ export default function TopBar() {
           <button className="flex items-center gap-2 rounded-full px-1.5 py-1 transition-colors hover:bg-gray-50">
             <div className="relative size-8 overflow-hidden rounded-full">
               <Image
-                src="/assets/madhur-profile.svg"
+                src="/images/avatars/madhur-profile.svg"
                 alt="Madhur Rastogi"
                 fill
                 sizes="30px"

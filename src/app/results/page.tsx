@@ -61,7 +61,6 @@ export default function ResultsPage() {
   const [gradingIds, setGradingIds] = useState<Set<string>>(new Set());
   const [mobileTab, setMobileTab] = useState<MobileTab>("questions");
 
-  // ── Phase 1 & 2: extraction pipeline ──────────────────────────────────────
   useEffect(() => {
     if (hasRun.current) return;
     if (!questionPaperFile || !answerSheetFile) {
@@ -98,7 +97,6 @@ export default function ResultsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [retryKey, questionPaperFile, answerSheetFile]);
 
-  // ── Client-side PDF rendering ──────────────────────────────────────────────
   useEffect(() => {
     if (stage !== "done" || !answerSheetFile) return;
     let cancelled = false;
@@ -117,7 +115,6 @@ export default function ResultsPage() {
     };
   }, [stage, answerSheetFile]);
 
-  // ── Background grading: parallel, incremental ──────────────────────────────
   useEffect(() => {
     if (stage !== "done" || hasGraded.current || mapped.length === 0) return;
     hasGraded.current = true;
@@ -140,7 +137,6 @@ export default function ResultsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stage, mapped]);
 
-  // ── Default-select first matched question ─────────────────────────────────
   useEffect(() => {
     if (stage !== "done" || selectedQuestionId) return;
     const first = mapped.find((m) => m.status === "matched");
@@ -190,7 +186,6 @@ export default function ResultsPage() {
         <TopBar />
 
         <main className="flex flex-1 flex-col">
-          {/* ── Error state ───────────────────────────────────────────── */}
           {stage === "error" ? (
             <div className="animate-fade-in-up flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
               <p className="font-heading text-xl font-bold text-[#2b2b2b]">
@@ -204,11 +199,9 @@ export default function ResultsPage() {
                 Try again
               </button>
             </div>
-          ) : /* ── Loading state ────────────────────────────────────────── */
-          isLoading ? (
+          ) : isLoading ? (
             <LoadingState title={copy.title} subtitle={copy.subtitle} />
-          ) : /* ── Empty state ──────────────────────────────────────────── */
-          mapped.length === 0 ? (
+          ) : mapped.length === 0 ? (
             <div className="animate-fade-in-up flex h-[calc(100vh-88px)] flex-col items-center justify-center gap-3 rounded-3xl bg-white px-6 text-center">
               <p className="font-heading text-xl font-bold text-[#2b2b2b]">
                 No questions found
@@ -225,7 +218,6 @@ export default function ResultsPage() {
               </button>
             </div>
           ) : (
-            /* ── Results: question ↔ answer mapping ───────────────────── */
             <div className="animate-fade-in flex flex-1 flex-col gap-3">
               {/*
                * Mobile tab toggle — "Questions" / "Answer Sheet"

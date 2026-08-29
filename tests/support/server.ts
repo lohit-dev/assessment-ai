@@ -6,14 +6,14 @@ const PORT = 3100;
 const SERVER_URL = `http://127.0.0.1:${PORT}`;
 const PID_FILE = join(
   process.env.TMPDIR ?? "/tmp",
-  "assessment-mapper-test-server.pid"
+  `assessment-mapper-test-server-${process.ppid}.pid`
 );
 
 let server: ChildProcess | undefined;
 let output = "";
 
 export async function startTestServer(): Promise<void> {
-  server = spawn("bun", ["run", "start", "--", "--port", String(PORT)], {
+  server = spawn("bun", ["--bun", "next", "start", "--port", String(PORT)], {
     cwd: process.cwd(),
     env: { ...process.env, PORT: String(PORT) },
     stdio: ["ignore", "pipe", "pipe"],

@@ -1,22 +1,14 @@
 // Server-only. Never import from client components.
 import * as pdfjs from "pdfjs-dist/legacy/build/pdf.mjs";
+import { WorkerMessageHandler } from "pdfjs-dist/legacy/build/pdf.worker.mjs";
 import type { PageImage } from "@/types";
 
 export const PDF_DATA_URL_PREFIX = "data:application/pdf";
 
-// Configure the worker once at module load time.
-try {
-  const workerUrl = new URL(
-    "pdfjs-dist/legacy/build/pdf.worker.mjs",
-    import.meta.url
-  ).href;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (pdfjs as any).GlobalWorkerOptions.workerSrc = workerUrl;
-} catch {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (pdfjs as any).GlobalWorkerOptions.workerSrc =
-    "pdfjs-dist/legacy/build/pdf.worker.mjs";
-}
+const pdfjsGlobal = globalThis as typeof globalThis & {
+  pdfjsWorker?: { WorkerMessageHandler: typeof WorkerMessageHandler };
+};
+pdfjsGlobal.pdfjsWorker = { WorkerMessageHandler };
 
 /**
  * Read a PDF buffer and return one PageImage per page.

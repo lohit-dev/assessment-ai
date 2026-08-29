@@ -244,7 +244,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
           <Link href="/" aria-label="Go to home" className="shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/assets/veda-ai.svg"
+              src="/images/brand/veda-ai.svg"
               alt="VedaAI logo"
               width={40}
               height={40}
@@ -295,7 +295,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
             <div className="relative size-10 shrink-0 overflow-hidden rounded-lg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/assets/delhi_public_school.svg"
+                src="/images/brand/delhi-public-school.svg"
                 alt="Delhi Public School logo"
                 className="size-full object-cover"
               />
@@ -325,7 +325,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/assets/veda-ai.svg"
+              src="/images/brand/veda-ai.svg"
               alt="VedaAI logo"
               width={36}
               height={36}
@@ -397,7 +397,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
           <div className="relative size-10 shrink-0 overflow-hidden rounded-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/assets/delhi_public_school.svg"
+              src="/images/brand/delhi-public-school.svg"
               alt="Delhi Public School logo"
               className="size-full object-cover"
             />

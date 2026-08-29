@@ -1,14 +1,12 @@
 /**
- * scripts/createTestPdfs.ts
+ * scripts/testing/generate-fixtures.ts
  *
  * Generates two minimal but fully-valid single-page PDFs:
- *   tests/fixtures/question-paper.pdf  — a 3-question science exam
- *   tests/fixtures/answer-sheet.pdf    — a student's handwritten-style answers
+ *   tests/fixtures/documents/question-paper.pdf  — a 3-question science exam
+ *   tests/fixtures/documents/answer-sheet.pdf    — a student's handwritten-style answers
  *
  * Run with:
- *   npx ts-node --project tsconfig.json scripts/createTestPdfs.ts
- * or:
- *   bun run scripts/createTestPdfs.ts
+ *   bun scripts/testing/generate-fixtures.ts
  *
  * No external PDF library needed — the PDFs are assembled from raw bytes
  * following the PDF 1.4 specification. pdfjs-dist can render these.
@@ -153,7 +151,14 @@ const answerSheetLines = [
 
 // ─── Write files ──────────────────────────────────────────────────────────────
 
-const fixturesDir = path.join(__dirname, "..", "tests", "fixtures");
+const fixturesDir = path.join(
+  __dirname,
+  "..",
+  "..",
+  "tests",
+  "fixtures",
+  "documents"
+);
 fs.mkdirSync(fixturesDir, { recursive: true });
 
 const questionPaperPath = path.join(fixturesDir, "question-paper.pdf");
