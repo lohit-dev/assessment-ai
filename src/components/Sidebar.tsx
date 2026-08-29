@@ -255,7 +255,7 @@ export default function Sidebar({ collapsed, onToggleCollapse }: SidebarProps) {
           <button
             type="button"
             aria-label="AI Teacher's Toolkit"
-            className="border-accent-glow w-w-10.5hrink-0 relative flex h-10.5 items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
+            className="border-accent-glow relative flex h-10.5 w-10.5 shrink-0 items-center justify-center rounded-full border-4 bg-[#272727] shadow-[0px_16px_24px_0_rgba(255,255,255,0.12),0px_32px_24px_0_rgba(255,255,255,0.2)] transition-opacity hover:opacity-90"
           >
             <svg
               width="16"
